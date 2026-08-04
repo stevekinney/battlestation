@@ -20,12 +20,12 @@ jobs:
       id-token: write
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       # setup-node writes the .npmrc (registry + NODE_AUTH_TOKEN wiring) needed
       # for OIDC trusted publishing with provenance — no hand-rolled .npmrc.
       - name: Setup Node
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v7
         with:
           node-version: '22'
           registry-url: 'https://registry.npmjs.org'
