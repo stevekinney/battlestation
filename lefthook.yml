@@ -1,0 +1,40 @@
+# Only print when something fails — successful hooks stay quiet.
+output:
+  - failure
+  - execution_out
+
+pre-commit:
+  piped: true
+  # Don't reformat/relint mid-merge or mid-rebase; let those operations finish.
+  skip:
+    - merge
+    - rebase
+  jobs:
+    - name: format-staged
+      run: bun run prettier --write {staged_files}
+      glob: "**/*.{ts,tsx,js,jsx,json,md}"
+      stage_fixed: true
+    - name: lint-fix
+      run: bun run oxlint --fix {staged_files}
+      glob: "**/*.{ts,tsx,js,jsx}"
+      stage_fixed: true
+    - name: conflict-marker-check
+      run: bun scripts/hooks/conflict-marker-check.ts
+    - name: package-lock-check
+      run: bun scripts/hooks/package-lock-check.ts
+      glob: "{package.json,bun.lock}"
+
+pre-push:
+  # CI already runs the full gate; don't duplicate it on pushes from CI.
+  skip:
+    - run: test "${CI}" = "true" -o "${CI}" = "1"
+  jobs:
+    - run: bun run validate
+
+post-checkout:
+  jobs:
+    - run: bun scripts/hooks/post-checkout.ts {1} {2} {3}
+
+post-merge:
+  jobs:
+    - run: bun scripts/hooks/post-merge.ts

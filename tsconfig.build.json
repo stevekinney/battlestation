@@ -1,0 +1,19 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "declaration": true,
+    "declarationMap": true,
+    "allowImportingTsExtensions": false,
+    "incremental": false,
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "stripInternal": true,
+    // Published code targets Node, so the declaration emit sees Node globals
+    // (process, Buffer, …) but NOT @types/bun — this keeps Bun-only globals out
+    // of the shipped .d.ts so they stay resolvable for Node consumers.
+    "types": ["node"]
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "**/*.test.ts", "**/*.spec.ts"]
+}
