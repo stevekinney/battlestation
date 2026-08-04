@@ -39,7 +39,13 @@ jobs:
       - name: Validate
         run: bun run validate
 
-      # `validate` runs entirely under Bun. This step exercises the emitted
+      # `validate` runs entirely under Bun. These steps exercise the emitted
       # Node bundle under the matrix Node version so the matrix is meaningful.
-      - name: Smoke-test Node build
-        run: node --input-type=module -e "import { greet } from './dist/node/index.js'; if (greet('Node') !== 'Hello, Node!') { throw new Error('Node build smoke test failed'); }"
+      # The CLI's help path never shells out to macOS `defaults`, so it runs
+      # fine on the Linux runners.
+      - name: Smoke-test Node build (CLI)
+        run: node ./dist/node/index.js --help
+
+      - name: Smoke-test Node build (library)
+        run: |
+          node --input-type=module -e "import { registry } from './dist/node/index.js'; if (registry.length < 100) { throw new Error('registry unexpectedly small'); }"
