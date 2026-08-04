@@ -42,6 +42,9 @@ export function isPlistValue(value: unknown): value is PlistValue {
     return true;
   }
   if (Array.isArray(value)) return value.every((entry) => isPlistValue(entry));
+  // TOML dates parse to Date-like objects with no enumerable properties,
+  // which would otherwise masquerade as empty dictionaries.
+  if (value instanceof Date) return false;
   if (typeof value === 'object' && value !== null) {
     return Object.values(value).every((entry) => isPlistValue(entry));
   }

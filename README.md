@@ -2,7 +2,7 @@
 
 Capture your macOS system preferences to a readable, auditable TOML file—and restore them on a new Mac.
 
-`battlestation` knows about ~150 curated settings across keyboard, text substitution, trackpad, mouse, Dock, Mission Control, hot corners, Finder, screenshots, appearance, region and language formats, menu bar, Control Center, window management, Dock pinned apps, default app handlers, and system behavior—including hidden preferences that System Settings doesn't expose (Dock auto-hide delay and animation speed, dimming hidden apps, POSIX paths in Finder titles, `.DS_Store` hygiene on network and USB volumes, and more). Structured settings—system keyboard shortcuts, text replacements, input sources—are captured as pretty-printed JSON inside the TOML, and per-host settings (Control Center modules, screen saver) are read and written with `defaults -currentHost`.
+`battlestation` knows about ~150 curated settings across keyboard, text substitution, trackpad, mouse, Dock, Mission Control, hot corners, Finder, screenshots, appearance, region and language formats, menu bar, Control Center, window management, Dock pinned apps, default app handlers, and system behavior—including hidden preferences that System Settings doesn't expose (Dock auto-hide delay and animation speed, dimming hidden apps, POSIX paths in Finder titles, `.DS_Store` hygiene on network and USB volumes, and more). Structured settings—system keyboard shortcuts, text replacements, input sources—are captured as native TOML (arrays with inline tables, dictionaries as sub-tables), and per-host settings (Control Center modules, screen saver) are read and written with `defaults -currentHost`.
 
 ## What it deliberately does not capture
 
@@ -65,7 +65,7 @@ key-repeat-rate = 1
 auto-hide-delay = 0.0
 ```
 
-Edit the file by hand, keep it in version control, and `apply` it on a fresh machine. `apply` only touches settings that actually differ, restarts the affected processes once, and tells you when a change needs a re-login to take full effect.
+Edit the file by hand, keep it in version control—**a private repo**: the capture includes personal details like your text replacements, installed apps, and default app choices—and `apply` it on a fresh machine. `apply` only touches settings that actually differ, restarts the affected processes once, and tells you when a change needs a re-login to take full effect.
 
 ## MCP server
 

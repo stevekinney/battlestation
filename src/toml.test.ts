@@ -4,6 +4,7 @@ import { findDefinition, registry, sectionOrder } from './settings/registry.js';
 import {
   analyzeToml,
   extractHeader,
+  formatPlistValue,
   formatTomlValue,
   parseToml,
   renderToml,
@@ -68,29 +69,57 @@ describe('renderToml', () => {
 
 describe('plist values in TOML', () => {
   const shortcuts = findDefinition('shortcuts', 'keyboard-shortcuts')!;
+  const replacements = findDefinition('shortcuts', 'text-replacements')!;
 
-  it('renders structured values as pretty JSON in a multi-line literal string', () => {
-    const value = { '64': { enabled: true, value: { parameters: [65535, 49] } } };
+  it('renders dictionary values as native TOML sub-tables and round-trips', () => {
+    const value = { '64': { enabled: true, value: { parameters: [65535, 49], type: 'standard' } } };
     const toml = renderToml([{ definition: shortcuts, value }], []);
 
-    expect(toml).toContain("keyboard-shortcuts = '''");
-    expect(toml).toContain('"enabled": true');
+    expect(toml).toContain('[shortcuts.keyboard-shortcuts.64]');
+    expect(toml).toContain('enabled = true');
+    expect(toml).toContain('[shortcuts.keyboard-shortcuts.64.value]');
+    expect(toml).toContain('parameters = [65535, 49]');
+    expect(toml).not.toContain("'''");
 
     const desired = parseToml(toml);
     expect(desired).toHaveLength(1);
     expect(desired[0]!.value).toEqual(value);
   });
 
-  it('falls back to an escaped single-line string when the JSON contains triple quotes', () => {
-    expect(formatTomlValue("'''", 'plist')).toBe(String.raw`"\"'''\""`);
+  it('renders array values as native TOML arrays with inline tables and round-trips', () => {
+    const value = [
+      { on: 1, replace: 'omw', with: 'On my way!' },
+      { on: 1, replace: 'brb', with: 'Be right back — need a minute.' },
+    ];
+    const toml = renderToml([{ definition: replacements, value }], []);
+
+    expect(toml).toContain('text-replacements = [');
+    expect(toml).toContain('{ on = 1, replace = "omw", with = "On my way!" },');
+
+    const desired = parseToml(toml);
+    expect(desired[0]!.value).toEqual(value);
   });
 
-  it('rejects non-string and invalid-JSON plist values', () => {
-    expect(() => parseToml('[shortcuts]\nkeyboard-shortcuts = 1')).toThrow(
-      'shortcuts.keyboard-shortcuts must be a JSON string',
-    );
-    expect(() => parseToml('[shortcuts]\nkeyboard-shortcuts = "not json"')).toThrow(
-      'shortcuts.keyboard-shortcuts must contain valid JSON',
+  it('quotes keys that are not bare-safe', () => {
+    const value = { 'needs quoting!': { 'a.b': 1 } };
+    const toml = renderToml([{ definition: shortcuts, value }], []);
+
+    expect(toml).toContain('[shortcuts.keyboard-shortcuts."needs quoting!"]');
+    expect(toml).toContain('"a.b" = 1');
+    expect(parseToml(toml)[0]!.value).toEqual(value);
+  });
+
+  it('wraps long arrays one element per line', () => {
+    const value = Array.from({ length: 8 }, (_, index) => `file:///Applications/App-${index}.app/`);
+    expect(formatPlistValue(value)).toContain('\n  "file:///Applications/App-0.app/",');
+    expect(formatPlistValue([])).toBe('[]');
+    expect(formatPlistValue({})).toBe('{}');
+    expect(formatPlistValue(true)).toBe('true');
+  });
+
+  it('rejects values plists cannot hold', () => {
+    expect(() => parseToml('[shortcuts]\nkeyboard-shortcuts = 1979-05-27')).toThrow(
+      'shortcuts.keyboard-shortcuts must be a TOML value with no nulls or dates',
     );
   });
 });

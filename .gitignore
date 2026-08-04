@@ -59,3 +59,6 @@ local.env
 
 # battlestation undo snapshots
 *.undo.toml
+
+# Personal machine snapshots stay out of the tool's repo
+/battlestation.toml

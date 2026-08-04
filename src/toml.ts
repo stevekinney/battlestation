@@ -1,6 +1,6 @@
 import { parse } from 'smol-toml';
 
-import { parseJsonPlist } from './plist.js';
+import { isPlistValue } from './plist.js';
 
 import type { SettingDefinition, SettingValue } from './settings/definition.js';
 import { findDefinition, registry, sectionOrder } from './settings/registry.js';
@@ -23,16 +23,73 @@ export type DesiredSetting = {
  * multi-line literal string, keeping them readable and diffable.
  */
 export function formatTomlValue(value: SettingValue, type: SettingDefinition['type']): string {
-  if (type === 'plist') {
-    const json = JSON.stringify(value, undefined, 2);
-    return json.includes("'''") ? JSON.stringify(json) : `'''\n${json}\n'''`;
-  }
+  if (type === 'plist') return formatPlistValue(value);
   if (typeof value === 'boolean') return value ? 'true' : 'false';
   if (typeof value === 'number') {
     return type === 'float' && Number.isInteger(value) ? value.toFixed(1) : String(value);
   }
 
   return JSON.stringify(value);
+}
+
+function formatKey(key: string): string {
+  return /^[A-Za-z0-9_-]+$/.test(key) ? key : JSON.stringify(key);
+}
+
+function formatInlineValue(value: SettingValue): string {
+  if (Array.isArray(value)) {
+    return `[${value.map((entry) => formatInlineValue(entry)).join(', ')}]`;
+  }
+  if (typeof value === 'object') {
+    const entries = Object.entries(value).map(
+      ([key, entry]) => `${formatKey(key)} = ${formatInlineValue(entry)}`,
+    );
+    return entries.length === 0 ? '{}' : `{ ${entries.join(', ')} }`;
+  }
+  if (typeof value === 'boolean') return value ? 'true' : 'false';
+  if (typeof value === 'number') return String(value);
+
+  return JSON.stringify(value);
+}
+
+/**
+ * Format a structured value as native TOML: scalars and inline tables stay
+ * on one line; long arrays wrap one element per line. Dictionaries at the
+ * top level of a setting are rendered as sub-tables by {@link renderToml}
+ * instead, since TOML inline tables cannot span lines.
+ */
+export function formatPlistValue(value: SettingValue): string {
+  if (Array.isArray(value)) {
+    const inline = formatInlineValue(value);
+    if (inline.length <= 76) return inline;
+
+    return `[\n${value.map((entry) => `  ${formatInlineValue(entry)},`).join('\n')}\n]`;
+  }
+
+  return formatInlineValue(value);
+}
+
+function isDictionary(value: SettingValue | undefined): value is Record<string, SettingValue> {
+  return typeof value === 'object' && value !== null && !Array.isArray(value);
+}
+
+function renderSubTables(path: string[], dictionary: Record<string, SettingValue>): string[] {
+  const lines = [`[${path.map((segment) => formatKey(segment)).join('.')}]`];
+  const nested: [string, Record<string, SettingValue>][] = [];
+
+  for (const [key, entry] of Object.entries(dictionary)) {
+    if (isDictionary(entry)) {
+      nested.push([key, entry]);
+    } else {
+      lines.push(`${formatKey(key)} = ${formatPlistValue(entry)}`);
+    }
+  }
+
+  for (const [key, entry] of nested) {
+    lines.push('', ...renderSubTables([...path, key], entry));
+  }
+
+  return lines;
 }
 
 /**
@@ -74,9 +131,16 @@ export function renderToml(captured: CapturedSetting[], headerLines: string[]): 
 
   for (const section of sectionOrder) {
     lines.push('', `[${section}]`);
+    const inSection = captured.filter((entry) => entry.definition.section === section);
 
-    for (const { definition, value } of captured) {
-      if (definition.section !== section) continue;
+    // Dictionary-valued settings render as sub-tables, which must come after
+    // every plain key of the section to stay attached to the right table.
+    const dictionaries = inSection.filter(
+      (entry) => entry.definition.type === 'plist' && isDictionary(entry.value),
+    );
+
+    for (const { definition, value } of inSection) {
+      if (dictionaries.some((entry) => entry.definition === definition)) continue;
 
       lines.push('');
       lines.push(`# ${settingLegend(definition)}`);
@@ -86,6 +150,14 @@ export function renderToml(captured: CapturedSetting[], headerLines: string[]): 
       } else {
         lines.push(`${definition.key} = ${formatTomlValue(value, definition.type)}`);
       }
+    }
+
+    for (const { definition, value } of dictionaries) {
+      if (!isDictionary(value)) continue;
+
+      lines.push('');
+      lines.push(`# ${settingLegend(definition)}`);
+      lines.push(...renderSubTables([section, definition.key], value));
     }
   }
 
@@ -98,12 +170,10 @@ function coerce(definition: SettingDefinition, raw: unknown): SettingValue {
   const address = `${definition.section}.${definition.key}`;
 
   if (definition.type === 'plist') {
-    if (typeof raw !== 'string') throw new TypeError(`${address} must be a JSON string`);
-    try {
-      return parseJsonPlist(raw);
-    } catch {
-      throw new TypeError(`${address} must contain valid JSON`);
+    if (!isPlistValue(raw)) {
+      throw new TypeError(`${address} must be a TOML value with no nulls or dates`);
     }
+    return raw;
   }
 
   if (definition.type === 'boolean') {
