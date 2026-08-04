@@ -1,0 +1,1943 @@
+# battlestation — macOS system preferences snapshot
+# Captured 2026-08-04T20:46:12.574Z on macOS 26.5.2.
+# Edit values freely, then run `battlestation apply` to write them back.
+# Commented-out keys were not set at capture time; macOS used its built-in default.
+
+[appearance]
+
+# Switch between light and dark appearance automatically with the time of day.
+switch-appearance-automatically = true
+
+# Fixed appearance when not switching automatically; unset means light. Takes effect after logging out and back in. Values: Dark = Dark.
+# interface-style is not set; macOS uses its built-in default.
+
+# Accent color. Unset means multicolor. Values: -1 = Graphite, 0 = Red, 1 = Orange, 2 = Yellow, 3 = Green, 4 = Blue, 5 = Purple, 6 = Pink.
+accent-color = -1
+
+# Legacy blue/graphite appearance switch that macOS keeps in sync with the accent color. Values: 1 = Blue, 6 = Graphite.
+aqua-color-variant = 6
+
+# Icon and widget tint color by name (e.g. "Graphite"), introduced in macOS 26.
+icon-tint-color = "Graphite"
+
+# Text selection highlight color as RGB components plus a name.
+highlight-color = "0.968627 0.831373 1.000000 Purple"
+
+# When scroll bars appear. Values: Automatic = Based on input device, WhenScrolling = When scrolling, Always = Always.
+show-scroll-bars = "WhenScrolling"
+
+# Clicking a scroll bar jumps to the clicked spot (true) or the next page (false).
+# click-scroll-bar-to-jump is not set; macOS uses its built-in default.
+
+[keyboard]
+
+# How fast a held key repeats. Lower is faster; 1 is faster than System Settings allows (its fastest is 2). Range: 1–120.
+key-repeat-rate = 1
+
+# How long a key must be held before it starts repeating. Lower is shorter; 15 is the shortest System Settings allows. Range: 15–120.
+initial-key-repeat-delay = 15
+
+# When true, holding a key shows the accent-character popup instead of repeating the key.
+press-and-hold-shows-accents = false
+
+# Keyboard navigation of controls (Tab moves focus everywhere when set to all). Values: 0 = Text boxes and lists only, 1 = Text boxes and lists only, 2 = All controls, 3 = All controls.
+full-keyboard-access = 1
+
+# What pressing the Fn/Globe key does. Values: 0 = Do nothing, 1 = Change input source, 2 = Show emoji and symbols, 3 = Start dictation.
+# fn-key-behavior is not set; macOS uses its built-in default.
+
+[text]
+
+# Automatically capitalize the first word of sentences as you type.
+auto-capitalization = true
+
+# Insert a period when you double-tap the space bar.
+auto-period-substitution = true
+
+# Replace straight quotes with curly typographic quotes as you type.
+# smart-quotes is not set; macOS uses its built-in default.
+
+# Replace double hyphens with em dashes as you type.
+# smart-dashes is not set; macOS uses its built-in default.
+
+# Correct spelling automatically as you type.
+# auto-spelling-correction is not set; macOS uses its built-in default.
+
+# Show inline predictive text completions as you type.
+# inline-predictive-text is not set; macOS uses its built-in default.
+
+[shortcuts]
+
+# Every system keyboard shortcut (Mission Control, Spotlight, screenshots, and so on) keyed by numeric shortcut ID, exactly as macOS stores it. Structured value — edit with care.
+keyboard-shortcuts = '''
+{
+  "15": {
+    "enabled": false
+  },
+  "16": {
+    "enabled": false
+  },
+  "17": {
+    "enabled": false
+  },
+  "18": {
+    "enabled": false
+  },
+  "19": {
+    "enabled": false
+  },
+  "20": {
+    "enabled": false
+  },
+  "21": {
+    "enabled": false
+  },
+  "22": {
+    "enabled": false
+  },
+  "23": {
+    "enabled": false
+  },
+  "24": {
+    "enabled": false
+  },
+  "25": {
+    "enabled": false
+  },
+  "26": {
+    "enabled": false
+  },
+  "28": {
+    "enabled": false,
+    "value": {
+      "type": "standard",
+      "parameters": [
+        51,
+        20,
+        1179648
+      ]
+    }
+  },
+  "29": {
+    "enabled": false,
+    "value": {
+      "type": "standard",
+      "parameters": [
+        51,
+        20,
+        1441792
+      ]
+    }
+  },
+  "30": {
+    "enabled": false,
+    "value": {
+      "type": "standard",
+      "parameters": [
+        52,
+        21,
+        1179648
+      ]
+    }
+  },
+  "31": {
+    "enabled": false,
+    "value": {
+      "type": "standard",
+      "parameters": [
+        52,
+        21,
+        1441792
+      ]
+    }
+  },
+  "32": {
+    "enabled": false,
+    "value": {
+      "type": "standard",
+      "parameters": [
+        65535,
+        126,
+        8650752
+      ]
+    }
+  },
+  "33": {
+    "enabled": false
+  },
+  "34": {
+    "enabled": false
+  },
+  "36": {
+    "enabled": false
+  },
+  "37": {
+    "enabled": false
+  },
+  "38": {
+    "value": {
+      "type": "button",
+      "parameters": [
+        8,
+        8,
+        0
+      ]
+    },
+    "enabled": true
+  },
+  "39": {
+    "value": {
+      "type": "button",
+      "parameters": [
+        32,
+        32,
+        0
+      ]
+    },
+    "enabled": true
+  },
+  "40": {
+    "value": {
+      "type": "button",
+      "parameters": [
+        8,
+        8,
+        131072
+      ]
+    },
+    "enabled": true
+  },
+  "41": {
+    "value": {
+      "type": "button",
+      "parameters": [
+        32,
+        32,
+        131072
+      ]
+    },
+    "enabled": true
+  },
+  "42": {
+    "value": {
+      "type": "button",
+      "parameters": [
+        4,
+        4,
+        0
+      ]
+    },
+    "enabled": true
+  },
+  "43": {
+    "enabled": true,
+    "value": {
+      "type": "button",
+      "parameters": [
+        4,
+        4,
+        131072
+      ]
+    }
+  },
+  "45": {
+    "enabled": false
+  },
+  "46": {
+    "enabled": false
+  },
+  "48": {
+    "enabled": false
+  },
+  "49": {
+    "enabled": false
+  },
+  "52": {
+    "enabled": false,
+    "value": {
+      "type": "standard",
+      "parameters": [
+        100,
+        2,
+        1179648
+      ]
+    }
+  },
+  "59": {
+    "enabled": false,
+    "value": {
+      "type": "standard",
+      "parameters": [
+        65535,
+        96,
+        9437184
+      ]
+    }
+  },
+  "60": {
+    "enabled": false,
+    "value": {
+      "type": "standard",
+      "parameters": [
+        32,
+        49,
+        262144
+      ]
+    }
+  },
+  "61": {
+    "value": {
+      "type": "standard",
+      "parameters": [
+        32,
+        49,
+        786432
+      ]
+    },
+    "enabled": false
+  },
+  "65": {
+    "enabled": false,
+    "value": {
+      "type": "standard",
+      "parameters": [
+        32,
+        49,
+        1572864
+      ]
+    }
+  },
+  "79": {
+    "enabled": true,
+    "value": {
+      "type": "standard",
+      "parameters": [
+        65535,
+        123,
+        8650752
+      ]
+    }
+  },
+  "80": {
+    "enabled": true,
+    "value": {
+      "type": "standard",
+      "parameters": [
+        65535,
+        123,
+        8781824
+      ]
+    }
+  },
+  "81": {
+    "enabled": true
+  },
+  "82": {
+    "enabled": true
+  },
+  "160": {
+    "enabled": true,
+    "value": {
+      "type": "standard",
+      "parameters": [
+        32,
+        49,
+        1572864
+      ]
+    }
+  },
+  "162": {
+    "enabled": false,
+    "value": {
+      "type": "standard",
+      "parameters": [
+        65535,
+        96,
+        9961472
+      ]
+    }
+  },
+  "164": {
+    "enabled": false,
+    "value": {
+      "type": "standard",
+      "parameters": [
+        65535,
+        65535,
+        0
+      ]
+    }
+  },
+  "175": {
+    "enabled": false,
+    "value": {
+      "type": "standard",
+      "parameters": [
+        65535,
+        65535,
+        0
+      ]
+    }
+  },
+  "176": {
+    "enabled": false,
+    "value": {
+      "type": "SAE1.0"
+    }
+  },
+  "184": {
+    "enabled": false,
+    "value": {
+      "type": "standard",
+      "parameters": [
+        53,
+        23,
+        1179648
+      ]
+    }
+  },
+  "215": {
+    "enabled": false,
+    "value": {
+      "type": "standard",
+      "parameters": [
+        65535,
+        65535,
+        0
+      ]
+    }
+  },
+  "216": {
+    "enabled": false,
+    "value": {
+      "type": "standard",
+      "parameters": [
+        65535,
+        65535,
+        0
+      ]
+    }
+  },
+  "217": {
+    "enabled": false,
+    "value": {
+      "type": "standard",
+      "parameters": [
+        65535,
+        65535,
+        0
+      ]
+    }
+  },
+  "218": {
+    "enabled": false,
+    "value": {
+      "type": "standard",
+      "parameters": [
+        65535,
+        65535,
+        0
+      ]
+    }
+  },
+  "219": {
+    "enabled": false,
+    "value": {
+      "type": "standard",
+      "parameters": [
+        65535,
+        65535,
+        0
+      ]
+    }
+  },
+  "222": {
+    "enabled": false,
+    "value": {
+      "type": "standard",
+      "parameters": [
+        65535,
+        65535,
+        0
+      ]
+    }
+  },
+  "223": {
+    "enabled": false,
+    "value": {
+      "type": "standard",
+      "parameters": [
+        54,
+        22,
+        1966080
+      ]
+    }
+  },
+  "224": {
+    "enabled": false,
+    "value": {
+      "type": "standard",
+      "parameters": [
+        65535,
+        65535,
+        0
+      ]
+    }
+  },
+  "225": {
+    "enabled": false,
+    "value": {
+      "type": "standard",
+      "parameters": [
+        65535,
+        65535,
+        0
+      ]
+    }
+  },
+  "226": {
+    "enabled": false,
+    "value": {
+      "type": "standard",
+      "parameters": [
+        65535,
+        65535,
+        0
+      ]
+    }
+  },
+  "227": {
+    "enabled": false,
+    "value": {
+      "type": "standard",
+      "parameters": [
+        65535,
+        65535,
+        0
+      ]
+    }
+  },
+  "228": {
+    "enabled": false,
+    "value": {
+      "type": "standard",
+      "parameters": [
+        65535,
+        65535,
+        0
+      ]
+    }
+  },
+  "229": {
+    "enabled": false,
+    "value": {
+      "type": "standard",
+      "parameters": [
+        65535,
+        65535,
+        0
+      ]
+    }
+  },
+  "230": {
+    "enabled": false,
+    "value": {
+      "type": "standard",
+      "parameters": [
+        65535,
+        65535,
+        0
+      ]
+    }
+  },
+  "231": {
+    "enabled": false,
+    "value": {
+      "type": "standard",
+      "parameters": [
+        65535,
+        65535,
+        0
+      ]
+    }
+  },
+  "232": {
+    "enabled": false,
+    "value": {
+      "type": "standard",
+      "parameters": [
+        65535,
+        65535,
+        0
+      ]
+    }
+  },
+  "240": {
+    "enabled": true,
+    "value": {
+      "type": "standard",
+      "parameters": [
+        52,
+        86,
+        3014656
+      ]
+    }
+  },
+  "241": {
+    "enabled": true,
+    "value": {
+      "type": "standard",
+      "parameters": [
+        54,
+        88,
+        3014656
+      ]
+    }
+  },
+  "242": {
+    "enabled": true,
+    "value": {
+      "type": "standard",
+      "parameters": [
+        56,
+        91,
+        3014656
+      ]
+    }
+  },
+  "243": {
+    "enabled": true,
+    "value": {
+      "type": "standard",
+      "parameters": [
+        50,
+        84,
+        3014656
+      ]
+    }
+  },
+  "244": {
+    "enabled": true,
+    "value": {
+      "type": "standard",
+      "parameters": [
+        55,
+        89,
+        3014656
+      ]
+    }
+  },
+  "245": {
+    "enabled": true,
+    "value": {
+      "type": "standard",
+      "parameters": [
+        57,
+        92,
+        3014656
+      ]
+    }
+  },
+  "246": {
+    "enabled": true,
+    "value": {
+      "type": "standard",
+      "parameters": [
+        49,
+        83,
+        3014656
+      ]
+    }
+  },
+  "247": {
+    "enabled": true,
+    "value": {
+      "type": "standard",
+      "parameters": [
+        51,
+        85,
+        3014656
+      ]
+    }
+  },
+  "260": {
+    "enabled": false,
+    "value": {
+      "type": "standard",
+      "parameters": [
+        65535,
+        53,
+        1048576
+      ]
+    }
+  }
+}
+'''
+
+# Text replacements (System Settings → Keyboard → Text). Note: macOS also syncs these via iCloud, which can overwrite a restored value.
+text-replacements = '''
+[
+  {
+    "replace": "bonbon",
+    "with": "Bon Bon",
+    "on": 1
+  },
+  {
+    "replace": "omw",
+    "with": "On my way!",
+    "on": 1
+  },
+  {
+    "replace": "sshame",
+    "with": "(；一_一)",
+    "on": 1
+  },
+  {
+    "replace": "ssweat",
+    "with": "(・_・;)",
+    "on": 1
+  },
+  {
+    "replace": "sshrug",
+    "with": "¯\\_(ツ)_/¯",
+    "on": 1
+  },
+  {
+    "replace": "tflip",
+    "with": "(╯°□°)╯︵ ┻━┻",
+    "on": 1
+  },
+  {
+    "replace": "fucking",
+    "with": "fucking",
+    "on": 1
+  },
+  {
+    "replace": "fuck",
+    "with": "fuck",
+    "on": 1
+  },
+  {
+    "replace": "shit",
+    "with": "shit",
+    "on": 1
+  }
+]
+'''
+
+# Enabled keyboard input sources. Structured value — restoring an invalid list can break keyboard input, so edit with care.
+input-sources = '''
+[
+  {
+    "InputSourceKind": "Keyboard Layout",
+    "KeyboardLayout Name": "U.S.",
+    "KeyboardLayout ID": 0
+  },
+  {
+    "InputSourceKind": "Non Keyboard Input Method",
+    "Bundle ID": "com.apple.CharacterPaletteIM"
+  },
+  {
+    "InputSourceKind": "Non Keyboard Input Method",
+    "Bundle ID": "com.apple.PressAndHold"
+  }
+]
+'''
+
+[trackpad]
+
+# Register a light tap on the trackpad as a click.
+tap-to-click = false
+
+# Register a two-finger tap or click as a secondary (right) click.
+secondary-click = true
+
+# Drag windows and select text by moving three fingers on the trackpad.
+three-finger-drag = false
+
+# Trackpad pointer tracking speed. Range: 0–3.
+tracking-speed = 3.0
+
+# Enable Force Click and haptic feedback for look-up and data detectors.
+force-click = true
+
+# Scroll content in the direction your fingers move (true) or the classic direction (false).
+# natural-scrolling is not set; macOS uses its built-in default.
+
+# Force needed for a click. Values: 0 = Light, 1 = Medium, 2 = Firm.
+click-firmness = 1
+
+# Force needed for a Force Click. Values: 0 = Light, 1 = Medium, 2 = Firm.
+force-click-firmness = 1
+
+# Haptic click feedback. Values: 0 = Silent clicking, 1 = Normal clicking.
+click-feedback = 1
+
+# Three-finger tap gesture. Values: 0 = Off, 2 = Look Up & data detectors.
+three-finger-tap-gesture = 0
+
+# Two-finger double-tap (smart zoom). Values: 0 = Off, 1 = Smart zoom.
+two-finger-double-tap-gesture = 1
+
+# Two-finger swipe from the right edge (Notification Center): 0 = off; the stored code selects the configured action.
+right-edge-swipe-gesture = 3
+
+# Four-finger vertical swipe (Mission Control / App Exposé): 0 = off; the stored code selects the configured action.
+four-finger-vertical-swipe-gesture = 2
+
+# Four-finger horizontal swipe (switch full-screen apps and Spaces): 0 = off; the stored code selects the configured action.
+four-finger-horizontal-swipe-gesture = 2
+
+# Four-finger pinch (Launchpad / show desktop): 0 = off; the stored code selects the configured action.
+four-finger-pinch-gesture = 2
+
+# Five-finger pinch: 0 = off; the stored code selects the configured action.
+five-finger-pinch-gesture = 2
+
+[mouse]
+
+# Mouse pointer tracking speed. Range: 0–3.
+tracking-speed = 3.0
+
+[dock]
+
+# Automatically hide the Dock until the pointer reaches the screen edge.
+auto-hide = true
+
+# Seconds the pointer must rest at the screen edge before the hidden Dock appears. 0 shows it instantly.
+auto-hide-delay = 0.0
+
+# Seconds the Dock show/hide animation takes; lower feels snappier. macOS default: 0.5.
+auto-hide-animation-duration = 0.15
+
+# Dock icon size. Range: 16–128 px.
+icon-size = 67
+
+# Magnify Dock icons under the pointer.
+magnification = false
+
+# Icon size at the center of magnification. Range: 16–128 px.
+# magnified-icon-size is not set; macOS uses its built-in default.
+
+# Which screen edge the Dock lives on. Values: left = Left, bottom = Bottom, right = Right.
+# position is not set; macOS uses its built-in default.
+
+# Window-minimize animation. Values: genie = Genie, scale = Scale, suck = Suck (hidden option).
+# minimize-effect is not set; macOS uses its built-in default.
+
+# Minimize windows into their app's Dock icon instead of a separate Dock tile.
+# minimize-into-app-icon is not set; macOS uses its built-in default.
+
+# Show a section of recently used apps at the end of the Dock.
+show-recents = false
+
+# Show the small dot under running applications.
+# show-indicator-lights is not set; macOS uses its built-in default.
+
+# Dim the Dock icons of hidden applications (a hidden preference).
+# dim-hidden-apps is not set; macOS uses its built-in default.
+
+# Bounce Dock icons while their application launches.
+# launch-animation is not set; macOS uses its built-in default.
+
+# Scroll up on a Dock icon to show the app's windows (a hidden preference).
+# scroll-to-open is not set; macOS uses its built-in default.
+
+# Enable spring-loading (hover-to-open) for every Dock item.
+# spring-load-all-items is not set; macOS uses its built-in default.
+
+# The apps pinned to the Dock, as an ordered JSON array of app URLs derived from the Dock tiles. Spacers and folders are not captured; applying rebuilds the pinned apps from this list.
+pinned-applications = '''
+[
+  "file:///Applications/Google%20Chrome.app/",
+  "file:///System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app/",
+  "file:///System/Applications/Messages.app/",
+  "file:///System/Applications/Mail.app/",
+  "file:///Applications/Obsidian.app/",
+  "file:///Applications/Ghostty.app/",
+  "file:///Applications/ChatGPT.app/",
+  "file:///Applications/Claude.app/",
+  "file:///Applications/GitHub%20Desktop.app/",
+  "file:///Applications/GitHub%20Copilot.app/",
+  "file:///Applications/Slack.app/",
+  "file:///Applications/TextMate.app/",
+  "file:///Applications/Cursor.app/",
+  "file:///Applications/Linear.app/",
+  "file:///Applications/Visual%20Studio%20Code.app/",
+  "file:///Applications/Keynote%20Creator%20Studio.app/",
+  "file:///Applications/Spotify.app/",
+  "file:///Applications/Signal.app/",
+  "file:///Applications/Fantastical.app/",
+  "file:///System/Applications/Reminders.app/",
+  "file:///System/Applications/Notes.app/",
+  "file:///System/Applications/System%20Settings.app/",
+  "file:///System/Applications/iPhone%20Mirroring.app/",
+  "file:///Applications/Setapp/Path%20Finder.app/"
+]
+'''
+
+[mission-control]
+
+# Automatically rearrange Spaces based on most recent use.
+# rearrange-spaces-by-use is not set; macOS uses its built-in default.
+
+# Group windows by application in Mission Control.
+group-windows-by-app = true
+
+# Give each display its own set of Spaces.
+# displays-have-separate-spaces is not set; macOS uses its built-in default.
+
+# When switching to an app, jump to a Space with its open windows.
+# switch-space-on-activate is not set; macOS uses its built-in default.
+
+[hot-corners]
+
+# Hot corner action. Values: 0 = No action, 1 = No action, 2 = Mission Control, 3 = Application windows, 4 = Desktop, 5 = Start screen saver, 6 = Disable screen saver, 10 = Put display to sleep, 11 = Launchpad, 12 = Notification Center, 13 = Lock screen, 14 = Quick Note.
+# top-left-action is not set; macOS uses its built-in default.
+
+# Modifier keys that must be held for the corner to trigger. Values: 0 = None, 131072 = Shift, 262144 = Control, 524288 = Option, 1048576 = Command.
+# top-left-modifier is not set; macOS uses its built-in default.
+
+# Hot corner action. Values: 0 = No action, 1 = No action, 2 = Mission Control, 3 = Application windows, 4 = Desktop, 5 = Start screen saver, 6 = Disable screen saver, 10 = Put display to sleep, 11 = Launchpad, 12 = Notification Center, 13 = Lock screen, 14 = Quick Note.
+# top-right-action is not set; macOS uses its built-in default.
+
+# Modifier keys that must be held for the corner to trigger. Values: 0 = None, 131072 = Shift, 262144 = Control, 524288 = Option, 1048576 = Command.
+# top-right-modifier is not set; macOS uses its built-in default.
+
+# Hot corner action. Values: 0 = No action, 1 = No action, 2 = Mission Control, 3 = Application windows, 4 = Desktop, 5 = Start screen saver, 6 = Disable screen saver, 10 = Put display to sleep, 11 = Launchpad, 12 = Notification Center, 13 = Lock screen, 14 = Quick Note.
+# bottom-left-action is not set; macOS uses its built-in default.
+
+# Modifier keys that must be held for the corner to trigger. Values: 0 = None, 131072 = Shift, 262144 = Control, 524288 = Option, 1048576 = Command.
+# bottom-left-modifier is not set; macOS uses its built-in default.
+
+# Hot corner action. Values: 0 = No action, 1 = No action, 2 = Mission Control, 3 = Application windows, 4 = Desktop, 5 = Start screen saver, 6 = Disable screen saver, 10 = Put display to sleep, 11 = Launchpad, 12 = Notification Center, 13 = Lock screen, 14 = Quick Note.
+bottom-right-action = 14
+
+# Modifier keys that must be held for the corner to trigger. Values: 0 = None, 131072 = Shift, 262144 = Control, 524288 = Option, 1048576 = Command.
+bottom-right-modifier = 0
+
+[finder]
+
+# Show dotfiles and other hidden files in Finder windows.
+show-hidden-files = true
+
+# Show every filename extension, even for known file types.
+show-all-extensions = true
+
+# Show the path bar at the bottom of Finder windows.
+show-path-bar = true
+
+# Show the status bar (item count, free space) in Finder windows.
+show-status-bar = true
+
+# Show the full POSIX path in the Finder window title (a hidden preference).
+posix-path-in-title = true
+
+# Keep folders on top when sorting by name.
+# sort-folders-first is not set; macOS uses its built-in default.
+
+# Default Finder view. Values: Nlsv = List, icnv = Icons, clmv = Columns, glyv = Gallery.
+default-view-style = "Nlsv"
+
+# Where Finder search starts. Values: SCcf = Current folder, SCev = This Mac, SCsp = Previous scope.
+# default-search-scope is not set; macOS uses its built-in default.
+
+# What new Finder windows open to. Values: PfHm = Home folder, PfDe = Desktop, PfDo = Documents, PfAF = Recents, PfVo = Computer, PfLo = Custom location.
+new-window-target = "PfHm"
+
+# Warn before changing a filename extension.
+extension-change-warning = false
+
+# Automatically remove items from the Trash after 30 days.
+empty-trash-after-30-days = true
+
+# Add a Quit menu item to Finder (⌘Q closes all Finder windows; a hidden preference).
+# quit-menu-item is not set; macOS uses its built-in default.
+
+# Show internal hard drives on the desktop.
+desktop-show-internal-drives = false
+
+# Show external drives on the desktop.
+desktop-show-external-drives = true
+
+# Show CDs, DVDs, and other removable media on the desktop.
+desktop-show-removable-media = true
+
+# Default view options (icon size, arrangement, text size) for icon, list, column, and gallery views. Structured value.
+standard-view-settings = '''
+{
+  "IconViewSettings": {
+    "backgroundColorBlue": 1,
+    "gridSpacing": 54,
+    "textSize": 12,
+    "backgroundColorRed": 1,
+    "backgroundType": 0,
+    "backgroundColorGreen": 1,
+    "gridOffsetX": 0,
+    "gridOffsetY": 0,
+    "showItemInfo": false,
+    "viewOptionsVersion": 1,
+    "arrangeBy": "none",
+    "labelOnBottom": true,
+    "showIconPreview": true,
+    "iconSize": 64
+  },
+  "ListViewSettings": {
+    "iconSize": 16,
+    "showIconPreview": true,
+    "columns": {
+      "comments": {
+        "visible": false,
+        "width": 300,
+        "ascending": true,
+        "index": 7
+      },
+      "dateLastOpened": {
+        "visible": false,
+        "width": 200,
+        "ascending": false,
+        "index": 8
+      },
+      "dateCreated": {
+        "visible": false,
+        "width": 181,
+        "ascending": false,
+        "index": 2
+      },
+      "size": {
+        "visible": true,
+        "width": 97,
+        "ascending": false,
+        "index": 3
+      },
+      "label": {
+        "visible": false,
+        "width": 100,
+        "ascending": true,
+        "index": 5
+      },
+      "kind": {
+        "visible": true,
+        "width": 115,
+        "ascending": true,
+        "index": 4
+      },
+      "version": {
+        "visible": false,
+        "width": 75,
+        "ascending": true,
+        "index": 6
+      },
+      "name": {
+        "visible": true,
+        "width": 300,
+        "ascending": true,
+        "index": 0
+      },
+      "dateModified": {
+        "visible": true,
+        "width": 181,
+        "ascending": false,
+        "index": 1
+      }
+    },
+    "calculateAllSizes": false,
+    "textSize": 13,
+    "sortColumn": "name",
+    "useRelativeDates": true,
+    "viewOptionsVersion": 1
+  },
+  "ExtendedListViewSettingsV2": {
+    "iconSize": 16,
+    "showIconPreview": true,
+    "columns": [
+      {
+        "ascending": true,
+        "identifier": "name",
+        "width": 300,
+        "visible": true
+      },
+      {
+        "ascending": false,
+        "identifier": "dateModified",
+        "width": 181,
+        "visible": true
+      },
+      {
+        "ascending": false,
+        "identifier": "dateCreated",
+        "width": 181,
+        "visible": false
+      },
+      {
+        "ascending": false,
+        "identifier": "size",
+        "width": 97,
+        "visible": true
+      },
+      {
+        "ascending": true,
+        "identifier": "kind",
+        "width": 115,
+        "visible": true
+      },
+      {
+        "ascending": true,
+        "identifier": "label",
+        "width": 100,
+        "visible": false
+      },
+      {
+        "ascending": true,
+        "identifier": "version",
+        "width": 75,
+        "visible": false
+      },
+      {
+        "ascending": true,
+        "identifier": "comments",
+        "width": 300,
+        "visible": false
+      },
+      {
+        "ascending": false,
+        "identifier": "dateLastOpened",
+        "width": 200,
+        "visible": false
+      },
+      {
+        "ascending": false,
+        "identifier": "shareOwner",
+        "width": 200,
+        "visible": false
+      },
+      {
+        "ascending": false,
+        "identifier": "shareLastEditor",
+        "width": 200,
+        "visible": false
+      }
+    ],
+    "calculateAllSizes": false,
+    "textSize": 13,
+    "sortColumn": "name",
+    "useRelativeDates": true,
+    "viewOptionsVersion": 1
+  },
+  "SettingsType": "StandardViewSettings",
+  "GalleryViewSettings": {
+    "arrangeBy": "name",
+    "iconSize": 48,
+    "showIconPreview": true,
+    "viewOptionsVersion": 1
+  }
+}
+'''
+
+# View options used for search results and smart folders. Structured value.
+search-view-settings = '''
+{
+  "ListViewSettings": {
+    "useRelativeDates": true,
+    "showIconPreview": true,
+    "columns": {
+      "comments": {
+        "visible": false,
+        "width": 300,
+        "ascending": true,
+        "index": 7
+      },
+      "name": {
+        "visible": true,
+        "width": 300,
+        "ascending": true,
+        "index": 0
+      },
+      "dateCreated": {
+        "visible": false,
+        "width": 181,
+        "ascending": false,
+        "index": 2
+      },
+      "size": {
+        "visible": true,
+        "width": 97,
+        "ascending": false,
+        "index": 3
+      },
+      "label": {
+        "visible": false,
+        "width": 100,
+        "ascending": true,
+        "index": 5
+      },
+      "kind": {
+        "visible": true,
+        "width": 115,
+        "ascending": true,
+        "index": 4
+      },
+      "version": {
+        "visible": false,
+        "width": 75,
+        "ascending": true,
+        "index": 6
+      },
+      "dateLastOpened": {
+        "visible": false,
+        "width": 200,
+        "ascending": false,
+        "index": 8
+      },
+      "dateModified": {
+        "visible": true,
+        "width": 181,
+        "ascending": false,
+        "index": 1
+      }
+    },
+    "calculateAllSizes": false,
+    "textSize": 13,
+    "sortColumn": "name",
+    "iconSize": 16,
+    "viewOptionsVersion": 1
+  },
+  "ExtendedListViewSettingsV2": {
+    "useRelativeDates": true,
+    "showIconPreview": true,
+    "columns": [
+      {
+        "identifier": "name",
+        "width": 300,
+        "ascending": true,
+        "visible": true
+      },
+      {
+        "identifier": "dateModified",
+        "width": 181,
+        "ascending": false,
+        "visible": true
+      },
+      {
+        "identifier": "dateCreated",
+        "width": 181,
+        "ascending": false,
+        "visible": false
+      },
+      {
+        "identifier": "size",
+        "width": 97,
+        "ascending": false,
+        "visible": true
+      },
+      {
+        "identifier": "kind",
+        "width": 115,
+        "ascending": true,
+        "visible": true
+      },
+      {
+        "identifier": "label",
+        "width": 100,
+        "ascending": true,
+        "visible": false
+      },
+      {
+        "identifier": "version",
+        "width": 75,
+        "ascending": true,
+        "visible": false
+      },
+      {
+        "identifier": "comments",
+        "width": 300,
+        "ascending": true,
+        "visible": false
+      },
+      {
+        "identifier": "dateLastOpened",
+        "width": 200,
+        "ascending": false,
+        "visible": false
+      },
+      {
+        "identifier": "shareOwner",
+        "width": 200,
+        "ascending": false,
+        "visible": false
+      },
+      {
+        "identifier": "shareLastEditor",
+        "width": 200,
+        "ascending": false,
+        "visible": false
+      }
+    ],
+    "calculateAllSizes": false,
+    "textSize": 13,
+    "sortColumn": "name",
+    "iconSize": 16,
+    "viewOptionsVersion": 1
+  },
+  "SettingsType": "FK_StandardViewSettings",
+  "IconViewSettings": {
+    "backgroundColorBlue": 1,
+    "gridSpacing": 54,
+    "textSize": 12,
+    "backgroundColorRed": 1,
+    "backgroundType": 0,
+    "backgroundColorGreen": 1,
+    "gridOffsetX": 0,
+    "gridOffsetY": 0,
+    "showItemInfo": false,
+    "viewOptionsVersion": 1,
+    "arrangeBy": "none",
+    "labelOnBottom": true,
+    "iconSize": 64,
+    "showIconPreview": true
+  }
+}
+'''
+
+# Desktop icon layout: icon size, grid spacing, text size, label position. Structured value.
+desktop-view-settings = '''
+{
+  "IconViewSettings": {
+    "backgroundColorBlue": 1,
+    "iconSize": 64,
+    "textSize": 12,
+    "backgroundColorRed": 1,
+    "backgroundType": 0,
+    "backgroundColorGreen": 1,
+    "gridOffsetX": 0,
+    "gridOffsetY": 0,
+    "showItemInfo": false,
+    "viewOptionsVersion": 1,
+    "arrangeBy": "none",
+    "labelOnBottom": true,
+    "showIconPreview": true,
+    "gridSpacing": 54
+  }
+}
+'''
+
+# Which sections of the Get Info panel are expanded. Structured value.
+info-panes-expanded = '''
+{
+  "Name": true,
+  "MetaData": true,
+  "OpenWith": true
+}
+'''
+
+# Finder window toolbar layout and display mode. Structured value.
+toolbar-configuration = '''
+{
+  "TB Is Shown": true,
+  "TB Icon Size Mode": 1,
+  "TB Size Mode": 1,
+  "TB Item Identifiers": [
+    "com.apple.finder.BACK",
+    "NSToolbarFlexibleSpaceItem",
+    "com.apple.finder.SWCH",
+    "NSToolbarSpaceItem",
+    "com.apple.finder.ARNG",
+    "com.apple.finder.ACTN",
+    "NSToolbarSpaceItem",
+    "NSToolbarSpaceItem",
+    "com.apple.finder.SHAR",
+    "com.apple.finder.LABL",
+    "NSToolbarFlexibleSpaceItem",
+    "NSToolbarFlexibleSpaceItem",
+    "com.apple.finder.SRCH"
+  ],
+  "TB Default Item Identifiers": [
+    "com.apple.finder.BACK",
+    "com.apple.finder.SWCH",
+    "NSToolbarSpaceItem",
+    "com.apple.finder.ARNG",
+    "NSToolbarSpaceItem",
+    "com.apple.finder.SHAR",
+    "com.apple.finder.LABL",
+    "com.apple.finder.ACTN",
+    "NSToolbarSpaceItem",
+    "com.apple.finder.SRCH"
+  ],
+  "TB Display Mode": 2
+}
+'''
+
+# Spring-loading: hovering a dragged item over a folder opens it.
+spring-loading-enabled = true
+
+# Seconds a dragged item must hover before spring-loading opens the folder. macOS default: 0.5.
+spring-loading-delay = 0.5
+
+# Do not write .DS_Store files on network volumes.
+# avoid-ds-store-on-network is not set; macOS uses its built-in default.
+
+# Do not write .DS_Store files on USB volumes.
+# avoid-ds-store-on-usb is not set; macOS uses its built-in default.
+
+[menu-bar]
+
+# Show AM/PM in the menu bar clock.
+clock-show-am-pm = false
+
+# Menu bar clock date display. Values: 0 = When space allows, 1 = Always, 2 = Never.
+clock-show-date = 2
+
+# Show the day of the week in the menu bar clock.
+clock-show-day-of-week = false
+
+# Show seconds in the menu bar clock.
+# clock-show-seconds is not set; macOS uses its built-in default.
+
+# Automatically hide and show the menu bar.
+auto-hide-menu-bar = false
+
+# Show the menu bar in full screen (hover is still required when hidden).
+menu-bar-in-fullscreen = false
+
+# Show the menu bar clock as a tiny analog face instead of digits.
+# clock-analog is not set; macOS uses its built-in default.
+
+# Flash the time separators every second.
+# clock-flash-separators is not set; macOS uses its built-in default.
+
+# Show the battery percentage in the menu bar.
+# battery-show-percentage is not set; macOS uses its built-in default.
+
+[windows]
+
+# Enable Stage Manager window organization.
+stage-manager = false
+
+# Leave a small margin between windows tiled to the screen edges.
+tiled-window-margins = false
+
+# Hide desktop icons unless the desktop is clicked (macOS "Desktop & Stage Manager" behavior).
+hide-desktop-icons = true
+
+# Clicking the wallpaper hides all windows to reveal the desktop.
+# click-wallpaper-to-reveal-desktop is not set; macOS uses its built-in default.
+
+# Hide desktop widgets outside of Stage Manager.
+hide-widgets = true
+
+# Animate opening windows (a hidden preference; false makes windows appear instantly).
+# window-animations is not set; macOS uses its built-in default.
+
+# Duration in seconds of window resize animations (a hidden preference). macOS default: 0.2.
+# window-resize-time is not set; macOS uses its built-in default.
+
+# What double-clicking a window title bar does. Values: Maximize = Zoom, Minimize = Minimize, Fill = Fill screen, None = Do nothing.
+# double-click-title-bar is not set; macOS uses its built-in default.
+
+# When to prefer tabs over new windows. Values: always = Always, fullscreen = In full screen only, manual = Never.
+# prefer-tabs is not set; macOS uses its built-in default.
+
+[control-center]
+
+# Placement code for the WiFi Control Center module, stored per host. Managed by Control Center settings; captured as-is.
+# wifi is not set; macOS uses its built-in default.
+
+# Placement code for the Bluetooth Control Center module, stored per host. Managed by Control Center settings; captured as-is.
+# bluetooth is not set; macOS uses its built-in default.
+
+# Placement code for the AirDrop Control Center module, stored per host. Managed by Control Center settings; captured as-is.
+# airdrop is not set; macOS uses its built-in default.
+
+# Placement code for the FocusModes Control Center module, stored per host. Managed by Control Center settings; captured as-is.
+# focus-modes is not set; macOS uses its built-in default.
+
+# Placement code for the ScreenMirroring Control Center module, stored per host. Managed by Control Center settings; captured as-is.
+# screen-mirroring is not set; macOS uses its built-in default.
+
+# Placement code for the Display Control Center module, stored per host. Managed by Control Center settings; captured as-is.
+# display is not set; macOS uses its built-in default.
+
+# Placement code for the Sound Control Center module, stored per host. Managed by Control Center settings; captured as-is.
+sound = 18
+
+# Placement code for the NowPlaying Control Center module, stored per host. Managed by Control Center settings; captured as-is.
+# now-playing is not set; macOS uses its built-in default.
+
+# Placement code for the Battery Control Center module, stored per host. Managed by Control Center settings; captured as-is.
+# battery is not set; macOS uses its built-in default.
+
+# Placement code for the Siri Control Center module, stored per host. Managed by Control Center settings; captured as-is.
+siri = 8
+
+# Placement code for the Weather Control Center module, stored per host. Managed by Control Center settings; captured as-is.
+weather = 8
+
+# Placement code for the VoiceControl Control Center module, stored per host. Managed by Control Center settings; captured as-is.
+voice-control = 8
+
+# Placement code for the MusicRecognition Control Center module, stored per host. Managed by Control Center settings; captured as-is.
+# music-recognition is not set; macOS uses its built-in default.
+
+# Placement code for the Hearing Control Center module, stored per host. Managed by Control Center settings; captured as-is.
+# hearing is not set; macOS uses its built-in default.
+
+# Placement code for the KeyboardBrightness Control Center module, stored per host. Managed by Control Center settings; captured as-is.
+# keyboard-brightness is not set; macOS uses its built-in default.
+
+# Menu bar auto-hide option code as stored by Control Center settings; captured as-is.
+menu-bar-auto-hide-option = 2
+
+[screen-saver]
+
+# Seconds of inactivity before the screen saver starts (0 = never), stored per host.
+# idle-time is not set; macOS uses its built-in default.
+
+[screenshots]
+
+# Directory where screenshots are saved.
+# save-location is not set; macOS uses its built-in default.
+
+# Screenshot file format. Values: png = PNG, jpg = JPEG, pdf = PDF, tiff = TIFF, heic = HEIC.
+# format is not set; macOS uses its built-in default.
+
+# Include the pointer in screenshots.
+show-cursor = false
+
+# Omit the drop shadow when capturing a window.
+# disable-shadow is not set; macOS uses its built-in default.
+
+# Show the floating thumbnail after taking a screenshot.
+# show-thumbnail is not set; macOS uses its built-in default.
+
+[region]
+
+# Use 24-hour time regardless of the locale default.
+# force-24-hour-time is not set; macOS uses its built-in default.
+
+# Temperature unit. Values: Celsius = Celsius, Fahrenheit = Fahrenheit.
+# temperature-unit is not set; macOS uses its built-in default.
+
+# Measurement units. Values: Centimeters = Centimeters, Inches = Inches.
+# measurement-units is not set; macOS uses its built-in default.
+
+# Use the metric system.
+# metric-units is not set; macOS uses its built-in default.
+
+# First day of the week per calendar, e.g. {"gregorian": 2} where 1 = Sunday and 2 = Monday. Structured value.
+# first-day-of-week is not set; macOS uses its built-in default.
+
+[system]
+
+# Default applications for file types and URL schemes (browser, mail client, and so on), as macOS Launch Services stores them. Structured value; takes effect after logging out and back in.
+default-app-handlers = '''
+[
+  {
+    "LSHandlerPreferredVersions": {
+      "LSHandlerRoleAll": "-"
+    },
+    "LSHandlerContentType": "com.apple.default-app.mail-client",
+    "LSHandlerRoleAll": "com.google.chrome",
+    "LSHandlerModificationDate": 781808301
+  },
+  {
+    "LSHandlerPreferredVersions": {
+      "LSHandlerRoleAll": "-"
+    },
+    "LSHandlerRoleAll": "com.google.chrome",
+    "LSHandlerURLScheme": "mailto",
+    "LSHandlerModificationDate": 781808301
+  },
+  {
+    "LSHandlerPreferredVersions": {
+      "LSHandlerRoleAll": "7151.69"
+    },
+    "LSHandlerContentType": "public.html",
+    "LSHandlerRoleAll": "com.google.chrome",
+    "LSHandlerModificationDate": 0
+  },
+  {
+    "LSHandlerPreferredVersions": {
+      "LSHandlerRoleAll": "-"
+    },
+    "LSHandlerRoleAll": "com.figma.desktop",
+    "LSHandlerURLScheme": "figma",
+    "LSHandlerModificationDate": 799084314
+  },
+  {
+    "LSHandlerPreferredVersions": {
+      "LSHandlerRoleAll": "-"
+    },
+    "LSHandlerRoleAll": "us.zoom.xos",
+    "LSHandlerURLScheme": "zoomcontactcentercall",
+    "LSHandlerModificationDate": 806469210
+  },
+  {
+    "LSHandlerPreferredVersions": {
+      "LSHandlerRoleAll": "221669.0"
+    },
+    "LSHandlerRoleAll": "com.docker.docker",
+    "LSHandlerURLScheme": "docker-desktop",
+    "LSHandlerModificationDate": 806705111
+  },
+  {
+    "LSHandlerPreferredVersions": {
+      "LSHandlerRoleAll": "-"
+    },
+    "LSHandlerRoleAll": "ai.elementlabs.lmstudio",
+    "LSHandlerURLScheme": "lmstudio",
+    "LSHandlerModificationDate": 806773954
+  },
+  {
+    "LSHandlerPreferredVersions": {
+      "LSHandlerRoleAll": "-"
+    },
+    "LSHandlerRoleAll": "com.getcleanshot.app-setapp",
+    "LSHandlerURLScheme": "cleanshot",
+    "LSHandlerModificationDate": 806773976
+  },
+  {
+    "LSHandlerPreferredVersions": {
+      "LSHandlerRoleAll": "-"
+    },
+    "LSHandlerRoleAll": "com.anthropic.claudefordesktop",
+    "LSHandlerURLScheme": "claude",
+    "LSHandlerModificationDate": 807563904
+  },
+  {
+    "LSHandlerPreferredVersions": {
+      "LSHandlerRoleEditor": "-"
+    },
+    "LSHandlerContentType": "com.runningwithcrayons.alfred.preferences",
+    "LSHandlerRoleEditor": "com.runningwithcrayons.alfred",
+    "LSHandlerModificationDate": 792266300
+  },
+  {
+    "LSHandlerPreferredVersions": {
+      "LSHandlerRoleEditor": "-"
+    },
+    "LSHandlerContentType": "com.runningwithcrayons.alfred.workflow",
+    "LSHandlerRoleEditor": "com.runningwithcrayons.alfred",
+    "LSHandlerModificationDate": 792266300
+  },
+  {
+    "LSHandlerPreferredVersions": {
+      "LSHandlerRoleAll": "-"
+    },
+    "LSHandlerRoleAll": "com.googlecode.iterm2",
+    "LSHandlerURLScheme": "iterm2",
+    "LSHandlerModificationDate": 791302170
+  },
+  {
+    "LSHandlerPreferredVersions": {
+      "LSHandlerRoleAll": "-"
+    },
+    "LSHandlerRoleAll": "com.apple.dt.xcode",
+    "LSHandlerURLScheme": "xcdoc",
+    "LSHandlerModificationDate": 806358529
+  },
+  {
+    "LSHandlerPreferredVersions": {
+      "LSHandlerRoleAll": "-"
+    },
+    "LSHandlerRoleAll": "com.openai.codex",
+    "LSHandlerURLScheme": "codex",
+    "LSHandlerModificationDate": 807499869
+  },
+  {
+    "LSHandlerPreferredVersions": {
+      "LSHandlerRoleAll": "-"
+    },
+    "LSHandlerRoleAll": "com.apple.dt.xcode",
+    "LSHandlerURLScheme": "xcarchive",
+    "LSHandlerModificationDate": 806358529
+  },
+  {
+    "LSHandlerPreferredVersions": {
+      "LSHandlerRoleAll": "-"
+    },
+    "LSHandlerRoleAll": "com.tinyspeck.slackmacgap",
+    "LSHandlerURLScheme": "slack",
+    "LSHandlerModificationDate": 806449975
+  },
+  {
+    "LSHandlerPreferredVersions": {
+      "LSHandlerRoleAll": "-"
+    },
+    "LSHandlerRoleAll": "com.google.chrome",
+    "LSHandlerURLScheme": "webcal",
+    "LSHandlerModificationDate": 792703542
+  },
+  {
+    "LSHandlerPreferredVersions": {
+      "LSHandlerRoleAll": "-"
+    },
+    "LSHandlerRoleAll": "com.apple.dt.xcode",
+    "LSHandlerURLScheme": "xcode-ci",
+    "LSHandlerModificationDate": 806358529
+  },
+  {
+    "LSHandlerPreferredVersions": {
+      "LSHandlerRoleAll": "-"
+    },
+    "LSHandlerRoleAll": "com.apple.dt.xcode",
+    "LSHandlerURLScheme": "x-swift-package-repository-authentication",
+    "LSHandlerModificationDate": 806358529
+  },
+  {
+    "LSHandlerPreferredVersions": {
+      "LSHandlerRoleAll": "-"
+    },
+    "LSHandlerRoleAll": "com.apple.dt.xcode",
+    "LSHandlerURLScheme": "x-xcode-ci-build-report-feedback",
+    "LSHandlerModificationDate": 806358529
+  },
+  {
+    "LSHandlerPreferredVersions": {
+      "LSHandlerRoleAll": "-"
+    },
+    "LSHandlerRoleAll": "com.apple.dt.xcode",
+    "LSHandlerURLScheme": "xcode",
+    "LSHandlerModificationDate": 806358529
+  },
+  {
+    "LSHandlerPreferredVersions": {
+      "LSHandlerRoleAll": "-"
+    },
+    "LSHandlerRoleAll": "com.apple.dt.xcode",
+    "LSHandlerURLScheme": "xcdevice",
+    "LSHandlerModificationDate": 806358529
+  },
+  {
+    "LSHandlerPreferredVersions": {
+      "LSHandlerRoleAll": "-"
+    },
+    "LSHandlerRoleAll": "com.apple.dt.xcode",
+    "LSHandlerURLScheme": "x-source-tag",
+    "LSHandlerModificationDate": 806358529
+  },
+  {
+    "LSHandlerPreferredVersions": {
+      "LSHandlerRoleAll": "-"
+    },
+    "LSHandlerRoleAll": "com.apple.dt.xcode",
+    "LSHandlerURLScheme": "doc",
+    "LSHandlerModificationDate": 806358529
+  },
+  {
+    "LSHandlerPreferredVersions": {
+      "LSHandlerRoleAll": "-"
+    },
+    "LSHandlerRoleAll": "com.apple.dt.xcode",
+    "LSHandlerURLScheme": "x-xcode-documentation",
+    "LSHandlerModificationDate": 806358529
+  },
+  {
+    "LSHandlerPreferredVersions": {
+      "LSHandlerRoleAll": "-"
+    },
+    "LSHandlerRoleAll": "com.apple.dt.xcode",
+    "LSHandlerURLScheme": "xcode-ci-handler",
+    "LSHandlerModificationDate": 806358529
+  },
+  {
+    "LSHandlerPreferredVersions": {
+      "LSHandlerRoleAll": "-"
+    },
+    "LSHandlerRoleAll": "com.apple.dt.xcode",
+    "LSHandlerURLScheme": "apple-reference-documentation",
+    "LSHandlerModificationDate": 806358529
+  },
+  {
+    "LSHandlerPreferredVersions": {
+      "LSHandlerRoleEditor": "-"
+    },
+    "LSHandlerContentType": "com.runningwithcrayons.alfred.appearance",
+    "LSHandlerRoleEditor": "com.runningwithcrayons.alfred",
+    "LSHandlerModificationDate": 792266300
+  },
+  {
+    "LSHandlerPreferredVersions": {
+      "LSHandlerRoleEditor": "-"
+    },
+    "LSHandlerContentType": "com.runningwithcrayons.alfred.snippets",
+    "LSHandlerRoleEditor": "com.runningwithcrayons.alfred",
+    "LSHandlerModificationDate": 792266300
+  },
+  {
+    "LSHandlerPreferredVersions": {
+      "LSHandlerRoleAll": "-"
+    },
+    "LSHandlerRoleAll": "com.runningwithcrayons.alfred",
+    "LSHandlerURLScheme": "alfred",
+    "LSHandlerModificationDate": 806773949
+  },
+  {
+    "LSHandlerPreferredVersions": {
+      "LSHandlerRoleAll": "-"
+    },
+    "LSHandlerRoleAll": "notion.id",
+    "LSHandlerURLScheme": "notion",
+    "LSHandlerModificationDate": 806773950
+  },
+  {
+    "LSHandlerPreferredVersions": {
+      "LSHandlerRoleAll": "-"
+    },
+    "LSHandlerRoleAll": "org.whispersystems.signal-desktop",
+    "LSHandlerURLScheme": "sgnl",
+    "LSHandlerModificationDate": 794516535
+  },
+  {
+    "LSHandlerPreferredVersions": {
+      "LSHandlerRoleAll": "-"
+    },
+    "LSHandlerRoleAll": "org.whispersystems.signal-desktop",
+    "LSHandlerURLScheme": "signalcaptcha",
+    "LSHandlerModificationDate": 794516535
+  },
+  {
+    "LSHandlerPreferredVersions": {
+      "LSHandlerRoleAll": "-"
+    },
+    "LSHandlerRoleAll": "com.github.githubclient",
+    "LSHandlerURLScheme": "x-github-client",
+    "LSHandlerModificationDate": 807208112
+  },
+  {
+    "LSHandlerPreferredVersions": {
+      "LSHandlerRoleAll": "-"
+    },
+    "LSHandlerRoleAll": "com.github.githubclient",
+    "LSHandlerURLScheme": "x-github-desktop-auth",
+    "LSHandlerModificationDate": 807208112
+  },
+  {
+    "LSHandlerPreferredVersions": {
+      "LSHandlerRoleAll": "-"
+    },
+    "LSHandlerRoleAll": "com.github.githubclient",
+    "LSHandlerURLScheme": "github-mac",
+    "LSHandlerModificationDate": 807208112
+  },
+  {
+    "LSHandlerPreferredVersions": {
+      "LSHandlerRoleAll": "-"
+    },
+    "LSHandlerRoleAll": "us.zoom.xos",
+    "LSHandlerURLScheme": "zoomphonecall",
+    "LSHandlerModificationDate": 806469210
+  },
+  {
+    "LSHandlerPreferredVersions": {
+      "LSHandlerRoleAll": "-"
+    },
+    "LSHandlerRoleAll": "us.zoom.xos",
+    "LSHandlerURLScheme": "zoomphonesms",
+    "LSHandlerModificationDate": 806469210
+  },
+  {
+    "LSHandlerPreferredVersions": {
+      "LSHandlerRoleAll": "-"
+    },
+    "LSHandlerContentType": "net.daringfireball.markdown",
+    "LSHandlerRoleAll": "com.microsoft.vscode",
+    "LSHandlerModificationDate": 0
+  },
+  {
+    "LSHandlerPreferredVersions": {
+      "LSHandlerRoleAll": "-"
+    },
+    "LSHandlerRoleAll": "com.descript.beachcube",
+    "LSHandlerURLScheme": "descript",
+    "LSHandlerModificationDate": 805053596
+  },
+  {
+    "LSHandlerPreferredVersions": {
+      "LSHandlerRoleAll": "-"
+    },
+    "LSHandlerRoleAll": "com.descript.beachcube",
+    "LSHandlerURLScheme": "descriptbc",
+    "LSHandlerModificationDate": 805053596
+  },
+  {
+    "LSHandlerPreferredVersions": {
+      "LSHandlerRoleAll": "-"
+    },
+    "LSHandlerRoleAll": "com.electron.wispr-flow",
+    "LSHandlerURLScheme": "wispr-flow",
+    "LSHandlerModificationDate": 803823952
+  },
+  {
+    "LSHandlerPreferredVersions": {
+      "LSHandlerRoleAll": "-"
+    },
+    "LSHandlerRoleAll": "com.uaudio.ua-connect",
+    "LSHandlerURLScheme": "uaconnect",
+    "LSHandlerModificationDate": 793757203
+  },
+  {
+    "LSHandlerPreferredVersions": {
+      "LSHandlerRoleAll": "7151.69"
+    },
+    "LSHandlerContentType": "com.apple.default-app.web-browser",
+    "LSHandlerRoleAll": "com.google.chrome",
+    "LSHandlerModificationDate": 0
+  },
+  {
+    "LSHandlerPreferredVersions": {
+      "LSHandlerRoleAll": "7151.69"
+    },
+    "LSHandlerRoleAll": "com.google.chrome",
+    "LSHandlerURLScheme": "https",
+    "LSHandlerModificationDate": 0
+  },
+  {
+    "LSHandlerPreferredVersions": {
+      "LSHandlerRoleAll": "-"
+    },
+    "LSHandlerContentType": "com.apple.ical.backup-package",
+    "LSHandlerRoleAll": "com.apple.ical",
+    "LSHandlerModificationDate": 803923303
+  },
+  {
+    "LSHandlerPreferredVersions": {
+      "LSHandlerRoleAll": "-"
+    },
+    "LSHandlerRoleAll": "com.loom.desktop",
+    "LSHandlerURLScheme": "loomdesktop",
+    "LSHandlerModificationDate": 807558994
+  },
+  {
+    "LSHandlerPreferredVersions": {
+      "LSHandlerRoleAll": "7151.69"
+    },
+    "LSHandlerRoleAll": "com.google.chrome",
+    "LSHandlerURLScheme": "http",
+    "LSHandlerModificationDate": 0
+  }
+]
+'''
+
+# Crash reporter dialog style (a hidden preference). Values: basic = Basic, developer = Developer, none = None.
+# crash-reporter-dialog is not set; macOS uses its built-in default.
+
+# Default new documents to iCloud Drive instead of the local disk.
+# save-to-icloud-by-default is not set; macOS uses its built-in default.
+
+# Expand the save panel to its detailed view by default.
+# expand-save-panel is not set; macOS uses its built-in default.
+
+# Expand the print panel to its detailed view by default.
+# expand-print-panel is not set; macOS uses its built-in default.
+
+# Reopen an app's windows when you relaunch it after quitting.
+restore-windows-on-relaunch = false
+
+# Sidebar icon size across apps. Values: 1 = Small, 2 = Medium, 3 = Large.
+sidebar-icon-size = 1
+
+# Alert (beep) volume. Range: 0–1.
+alert-volume = 1.0
+
+# Play user interface sound effects (emptying the Trash, screenshots, and so on).
+# ui-sound-effects is not set; macOS uses its built-in default.

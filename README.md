@@ -1,132 +1,106 @@
-# Project Name
+# battlestation
 
-## Prerequisites
+Capture your macOS system preferences to a readable, auditable TOML file—and restore them on a new Mac.
 
-- [Bun](https://bun.sh) installed on your machine.
+`battlestation` knows about ~150 curated settings across keyboard, text substitution, trackpad, mouse, Dock, Mission Control, hot corners, Finder, screenshots, appearance, region and language formats, menu bar, Control Center, window management, Dock pinned apps, default app handlers, and system behavior—including hidden preferences that System Settings doesn't expose (Dock auto-hide delay and animation speed, dimming hidden apps, POSIX paths in Finder titles, `.DS_Store` hygiene on network and USB volumes, and more). Structured settings—system keyboard shortcuts, text replacements, input sources—are captured as pretty-printed JSON inside the TOML, and per-host settings (Control Center modules, screen saver) are read and written with `defaults -currentHost`.
 
-## Installation
+## What it deliberately does not capture
 
-Create a new project based on this template:
+Settings that live outside `defaults` need different mechanisms and are out of scope today: power management (`pmset`), Software Update automation and Time Machine (system-level, `sudo`), timezone (`systemsetup`), Night Shift, per-app notification preferences, login items, network and Bluetooth configuration, and Finder sidebar contents. Third-party apps' own preferences (Alfred, Karabiner, and so on) are their own domains—sync those with the apps' own export tooling or dotfiles. Some captured values come with caveats noted in the file itself: text replacements also sync via iCloud, and Control Center placement codes are opaque values managed by macOS.
 
-```bash
-# From the local template in ~/.bun-create/basic
-bun create basic $PROJECT_DIRECTORY
-
-# Skip installing dependencies (useful for CI or offline work)
-bun create basic $PROJECT_DIRECTORY --no-install
-```
-
-If you publish this template to a GitHub repository, you can also create from
-it directly — replace `<owner>/<repo>` with your repository:
+## Usage
 
 ```bash
-bun create github.com/<owner>/<repo> $PROJECT_DIRECTORY
+# Snapshot the current machine's settings to battlestation.toml
+battlestation capture
+
+# See how the live system differs from the file
+battlestation diff
+
+# Make the system match the file (restarts Dock/Finder/SystemUIServer as needed)
+battlestation apply
+
+# Preview without changing anything, or skip the confirmation prompt
+battlestation apply --dry-run
+battlestation apply --yes
+
+# Check the file for problems; --fix removes unknown entries and rewrites canonically
+battlestation doctor
+battlestation doctor --fix
+
+# Inspect and edit the file without opening it (great for scripts and agents)
+battlestation list --json
+battlestation get dock.icon-size
+battlestation set dock.icon-size 48
+battlestation unset dock.icon-size
+
+# Machine-readable diff/apply for scripts and UIs
+battlestation diff --json
+battlestation apply --json --yes
+
+# Detailed help for any command
+battlestation apply --help
+
+# All commands accept an explicit path
+battlestation capture --file ~/settings/macbook.toml
 ```
 
-The `--no-install` flag is helpful when:
+`apply` is declarative: settings present in the TOML are written, and registry settings absent from the TOML (commented out) that are set on the system are deleted, restoring the macOS default. It shows the full change list and asks for confirmation before touching anything—`--yes` skips the prompt for scripted runs.
 
-- Working in offline environments
-- Using CI pipelines with cached dependencies
-- You plan to modify dependencies before installation
+Before writing anything, `apply` saves a full snapshot of the pre-apply state next to your file (`battlestation.undo.toml`, gitignored)—revert any apply with `battlestation apply --file battlestation.undo.toml`. `diff` and `apply` also take `--json` for machine consumption (`apply --json` requires `--yes`), so scripts, agents, and a future UI all speak the same protocol.
 
-## Core Tools
+During development, run the same commands with `bun run src/index.ts <command>`, or use the repo shortcuts `bun run capture` and `bun run apply`, which operate on the gitignored `tmp/battlestation.toml` scratch file.
 
-- Bun: runtime, bundler, test runner, and package manager
-- TypeScript: strict type checking
-- Oxlint: fast Rust-based linter
-- Prettier: formatting
-- Lefthook: Git hooks
+The captured TOML is fully annotated—every setting carries a comment explaining what it does and what its values mean, and settings that aren't set on the machine appear as commented-out keys so the file documents everything it can manage:
+
+```toml
+[keyboard]
+
+# How fast a held key repeats. Lower is faster; 1 is faster than System Settings allows (its fastest is 2).
+key-repeat-rate = 1
+
+[dock]
+
+# Seconds the pointer must rest at the screen edge before the hidden Dock appears. 0 shows it instantly.
+auto-hide-delay = 0.0
+```
+
+Edit the file by hand, keep it in version control, and `apply` it on a fresh machine. `apply` only touches settings that actually differ, restarts the affected processes once, and tells you when a change needs a re-login to take full effect.
+
+## MCP server
+
+`battlestation mcp` runs the tool as a STDIO [Model Context Protocol](https://modelcontextprotocol.io) server, exposing every capability as a tool—`capture`, `diff`, `apply`, `doctor`, `list_settings`, `get_setting`, `set_setting`, and `unset_setting`—backed by the exact same command implementations as the CLI. Apply runs without an interactive prompt; the MCP client's tool-approval flow is the confirmation, and the undo snapshot is still written first. Register it with Claude Code:
+
+```bash
+claude mcp add battlestation -- npx battlestation mcp
+```
+
+## Value domains and validation
+
+Every enumerated or bounded setting carries its legal values as data—`choices` with human labels, numeric `range`s with units—and the TOML legend comments are generated from that data, so they can never drift from what the tool validates. `doctor` checks values against these domains and reports out-of-domain values as advisory `[warning]`s (exit 0) rather than blocking errors: macOS often accepts values beyond what System Settings offers, and the file records what your system actually stores. Settings whose misuse can bite (keyboard shortcuts, input sources, default app handlers) are flagged `risk: caution` in the registry and surfaced in `--json` output.
+
+## Using it as a library
+
+The package exports the full engine alongside the CLI: `registry` (with labels, descriptions, choices, ranges, and risk metadata per setting), `captureToml`, `diffSettings`, `applyChanges` (with a per-change progress callback), `readSetting`/`writeSetting`, and the TOML analyze/render functions. The CLI is a thin shell over these—anything it does, a menu-bar app or script can do in-process.
+
+## How it works
+
+Everything is driven by a declarative registry in `src/settings/`—each entry maps a friendly TOML address (like `dock.auto-hide-delay`) to a `defaults` domain and key, a value type, a human description, and the process that must restart for the change to stick. `capture` reads each key with `defaults read`, `apply` writes with `defaults write` (mirroring domains like the Bluetooth trackpad where macOS keeps duplicates), and the TOML is emitted by hand so every key keeps its documentation.
+
+## Releases
+
+Publishing a GitHub Release triggers `.github/workflows/executables.yaml`, which compiles standalone macOS executables (`bun build --compile`, Apple Silicon and Intel) and attaches them to the release as `battlestation-darwin-{arm64,x64}.tar.gz`. No Bun or Node required on the target machine.
 
 ## Development
 
-Start the development server:
-
 ```bash
-bun run dev
+bun install
+bun test              # tests (100% coverage enforced)
+bun run check         # format check + lint + typecheck
+bun run validate      # the full gate, including build and package checks
+bun run build         # dual Node/Bun bundles in dist/
 ```
 
-### Git Hooks (Lefthook)
+## License
 
-Lefthook is installed via the `prepare` script on `bun install`. Hook implementations live in `scripts/hooks/` and are configured in `lefthook.yml`.
-
-- `pre-commit`: formats staged files with Prettier, runs oxlint --fix on staged files, blocks staged conflict markers, and checks that `bun.lock` is staged when `package.json` changes. Fast by design — typecheck and tests are intentionally deferred to pre-push. Skipped during merge/rebase.
-- `pre-push`: runs `bun run validate` (format check, lint, typecheck, tests, build, and package validation). This is the full gate before code leaves your machine. Skipped in CI.
-- `post-checkout`: installs deps when `bun.lock` changed; surfaces config changes.
-- `post-merge`: installs/cleans when dependencies or config changed; flags leftover conflict markers.
-
-Hooks print only when something fails, so clean commits and pushes stay quiet. Use `--no-verify` to bypass hooks (not recommended; CI will catch you anyway).
-
-### Running Tests
-
-This template uses Bun's built-in test runner with a preloaded setup file at `test/setup.ts` that resets mocks and system time after each test.
-
-```bash
-bun test              # run all tests
-bun test --watch      # watch mode
-bun test --coverage   # coverage report
-```
-
-Coverage thresholds are configured in `bunfig.toml` under `[test]`. The default is 100% for `src/`.
-
-For mocking, clock control, and module mocking see the [bun:test docs](https://bun.sh/docs/test/mocks).
-
-### Continuous Integration
-
-A CI workflow at `.github/workflows/ci.yaml` runs `bun run validate` on every push and pull request against Node 22 (LTS) and Node 24 (latest). This includes linting, typechecking, tests, build, and package validation (`publint` + `@arethetypeswrong/cli`).
-
-### Understanding `bun run` vs `bunx`
-
-- **bun run**: Executes scripts defined in `package.json` or runs local TypeScript/JavaScript files directly.
-- **bun x**: Executes binaries from installed packages. For packages already in `devDependencies`, prefer `bun run <script>` or calling the binary directly rather than `bunx`, which can pull a remote version.
-
-## Project Structure
-
-- `src/` — Source code
-- `test/` — Test setup (`test/setup.ts` is preloaded by bun:test)
-- `scripts/hooks/` — Git hook implementations (TypeScript + Bun)
-- `scripts/setup/` — One-time `bun create` setup scripts (self-remove after first install)
-- `lefthook.yml` — Git hook configuration
-
-## Library Output
-
-When built, the package emits two ESM bundles:
-
-- `dist/node/index.js` — Node-compatible build (`Bun.build target: 'node'`)
-- `dist/bun/index.js` — Bun-optimized build (`Bun.build target: 'bun'`)
-- `dist/index.d.ts` — Shared TypeScript declarations
-
-The `package.json` `exports` map routes Bun consumers to the Bun build and Node/bundler consumers to the Node build automatically.
-
-Published `src/` code must not use Bun-only runtime APIs (`Bun.file`, `Bun.serve`, etc.) — those belong in `scripts/` and tests only.
-
-## Publishing
-
-Publishing is opt-in. When you're ready to publish to npm:
-
-1. Set `publishConfig` in your `package.json` as needed:
-   ```json
-   "publishConfig": { "access": "public", "provenance": true }
-   ```
-2. Tag the release: `git tag vX.Y.Z && git push --tags`
-3. The `release.yaml` workflow triggers, verifies the tag matches `package.json`, builds, validates the package exports, and publishes with npm provenance (requires `id-token: write` permission, already set in the workflow).
-
-## Customization
-
-### TypeScript Configuration
-
-The base `tsconfig.json` targets ESNext with strict settings tuned for a Bun library. To add a frontend app layer:
-
-- Extend `tsconfig.json` in a new `tsconfig.frontend.json`
-- Add `"lib": ["ESNext","DOM","DOM.Iterable"]` and `"jsx": "react-jsx"` (or your framework equivalent)
-
-### Template Setup (bun-create)
-
-When using `bun create` with this template, a postinstall sequence runs once to bootstrap the project:
-
-- Sets `package.json:name` from the folder name
-- Copies `.env.example` to `.env` (or appends missing keys)
-- Writes `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, and `GEMINI_API_KEY` from your shell into `.env` if the values are currently empty or placeholder
-- Runs `bun run prepare` to install Lefthook hooks
-- Removes `scripts/setup/` and the `bun-create` entry from `package.json`
-
-These steps are idempotent — safe to re-run if something fails partway through.
+MIT
