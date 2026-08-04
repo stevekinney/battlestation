@@ -3,10 +3,16 @@ import { afterAll, describe, expect, it } from 'bun:test';
 import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { InMemoryTransport } from '@modelcontextprotocol/sdk/inMemory.js';
 
+import { z } from 'zod';
+
 import { makeEnvironment } from '../test/cli-helpers.js';
 import { closeMcpServer, createMcpServer, logToStderr } from './mcp.js';
 
-type TextContent = { type: string; text: string }[];
+const textResultSchema = z.object({
+  content: z.array(z.object({ type: z.string(), text: z.string() })),
+});
+
+const jsonArraySchema = z.array(z.record(z.string(), z.unknown()));
 
 async function connectedClient(files: Map<string, string>): Promise<Client> {
   const { environment } = makeEnvironment(files);
@@ -20,8 +26,10 @@ async function connectedClient(files: Map<string, string>): Promise<Client> {
 }
 
 function text(result: unknown): string {
-  const content = (result as { content: TextContent }).content;
-  return content.map((block) => block.text).join('\n');
+  return textResultSchema
+    .parse(result)
+    .content.map((block) => block.text)
+    .join('\n');
 }
 
 describe('createMcpServer', () => {
@@ -48,7 +56,7 @@ describe('createMcpServer', () => {
     const client = await connectedClient(new Map(files));
     const result = await client.callTool({ name: 'diff', arguments: {} });
 
-    const changes = JSON.parse(text(result)) as Record<string, unknown>[];
+    const changes = jsonArraySchema.parse(JSON.parse(text(result)));
     expect(changes).toHaveLength(1);
     expect(changes[0]).toMatchObject({ address: 'dock.icon-size', current: null, target: 48 });
     await client.close();
@@ -113,7 +121,7 @@ describe('createMcpServer', () => {
     expect(workingFiles.get('battlestation.toml')).not.toContain('icon-size = 64');
 
     const list = await client.callTool({ name: 'list_settings', arguments: {} });
-    const reports = JSON.parse(text(list)) as Record<string, unknown>[];
+    const reports = jsonArraySchema.parse(JSON.parse(text(list)));
     expect(reports.length).toBeGreaterThan(100);
     await client.close();
   });

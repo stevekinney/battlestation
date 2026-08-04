@@ -2,8 +2,11 @@
   "name": "battlestation",
   "version": "0.0.1",
   "description": "Capture macOS system preferences to an auditable TOML file and restore them on a new machine.",
-  "bin": {
-    "battlestation": "./dist/node/index.js"
+  "homepage": "https://github.com/stevekinney/battlestation#readme",
+  "bugs": "https://github.com/stevekinney/battlestation/issues",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stevekinney/battlestation.git"
   },
   "license": "MIT",
   "author": "Steve Kinney <hello@stevekinney.net>",
@@ -20,6 +23,9 @@
   },
   "main": "./dist/node/index.js",
   "types": "./dist/index.d.ts",
+  "bin": {
+    "battlestation": "./dist/node/index.js"
+  },
   "files": [
     "dist",
     "src",
@@ -35,10 +41,10 @@
     "dev": "bun --watch run src/index.ts",
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
     "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,md}\"",
-    "lint": "oxlint --type-aware --tsconfig ./tsconfig.json",
-    "lint:fix": "oxlint --fix --type-aware --tsconfig ./tsconfig.json",
-    "package:check": "publint && attw --pack --ignore-rules cjs-resolves-to-esm",
+    "lint": "oxlint --deny-warnings --type-aware --tsconfig ./tsconfig.json",
+    "lint:fix": "oxlint --deny-warnings --fix --type-aware --tsconfig ./tsconfig.json",
     "prepack": "bun run build",
+    "package:check": "publint && attw --pack --ignore-rules cjs-resolves-to-esm",
     "prepare": "lefthook install",
     "prepublishOnly": "bun run validate",
     "start": "bun run src/index.ts",
