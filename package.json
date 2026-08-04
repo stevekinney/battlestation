@@ -24,7 +24,7 @@
   "main": "./dist/node/index.js",
   "types": "./dist/index.d.ts",
   "bin": {
-    "battlestation": "./dist/node/index.js"
+    "battlestation": "dist/node/index.js"
   },
   "files": [
     "dist",
