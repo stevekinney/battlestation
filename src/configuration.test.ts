@@ -97,4 +97,11 @@ describe('configurationSchema', () => {
       expect(field.meta()?.description, `${key} is missing a description`).toBeTruthy();
     }
   });
+
+  it('survives resolution, so the exported schema stays usable for docs afterward', async () => {
+    await resolveConfiguration({ env: {}, cwd: await emptyCwd() });
+
+    expect(Object.isFrozen(configurationSchema.shape.configuration)).toBe(false);
+    expect(configurationSchema.shape.configuration.meta()?.description).toBeTruthy();
+  });
 });

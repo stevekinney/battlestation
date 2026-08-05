@@ -33,26 +33,16 @@ export function expandPath(value: string, home: string = homedir(), cwd = proces
  * absent: they modify a single action rather than configuring the tool, and a
  * persisted `yes = true` would be a footgun rather than a convenience.
  */
-export function createConfigurationSchema() {
-  return z.object({
-    configuration: z.string().default(defaultManifestPath()).meta({
-      description: 'Path to the TOML settings manifest.',
-      example: '~/.battlestation.toml',
-    }),
-    interval: z
-      .enum(['hourly', 'daily', 'weekly'])
-      .default('weekly')
-      .meta({ description: 'How often the scheduled drift check runs.' }),
-  });
-}
-
-/**
- * The configuration schema, for consumers and documentation. Resolution uses
- * its own instance from {@link createConfigurationSchema} because resolving
- * freezes the schema it is handed, which breaks Zod's lazy method binding.
- * See https://github.com/stevekinney/environmentalist/issues/5
- */
-export const configurationSchema = createConfigurationSchema();
+export const configurationSchema = z.object({
+  configuration: z.string().default(defaultManifestPath()).meta({
+    description: 'Path to the TOML settings manifest.',
+    example: '~/.battlestation.toml',
+  }),
+  interval: z
+    .enum(['hourly', 'daily', 'weekly'])
+    .default('weekly')
+    .meta({ description: 'How often the scheduled drift check runs.' }),
+});
 
 /** Configuration after resolution, with paths expanded. */
 export type ResolvedConfiguration = {
@@ -84,7 +74,7 @@ export async function resolveConfiguration(
   const home = options.home ?? homedir();
   const result = await environmentalist.safe({
     name: 'battlestation',
-    schema: createConfigurationSchema(),
+    schema: configurationSchema,
     envPrefix: 'BATTLESTATION',
     exclude: ['flags', 'search-params'],
     ...(options.env === undefined ? {} : { env: options.env }),

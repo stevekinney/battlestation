@@ -44,7 +44,6 @@ export { findDefinition, registry } from './settings/registry.js';
 export { analyzeToml, parseToml, renderToml, settingLegend } from './toml.js';
 export {
   configurationSchema,
-  createConfigurationSchema,
   defaultManifestPath,
   expandPath,
   resolveConfiguration,
