@@ -10,6 +10,7 @@ export type CliEnvironment = {
   run: CommandRunner;
   readTextFile: (path: string) => Promise<string>;
   writeTextFile: (path: string, contents: string) => Promise<void>;
+  removeTextFile: (path: string) => Promise<void>;
   log: (message: string) => void;
   confirm: (question: string) => Promise<boolean>;
   now: () => Date;
@@ -22,6 +23,12 @@ export type CommandOptions = {
   yes: boolean;
   fix: boolean;
   json: boolean;
+  /** For diff: exit nonzero when the system has drifted. */
+  exitCode: boolean;
+  /** For schedule: how often the drift check runs. */
+  interval: string;
+  /** For schedule: remove the agent instead of installing it. */
+  uninstall: boolean;
   /** Positional arguments after the command name (e.g. address and value). */
   arguments: string[];
 };

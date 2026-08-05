@@ -38,6 +38,9 @@ battlestation unset dock.icon-size
 battlestation diff --json
 battlestation apply --json --yes
 
+# Exit 1 when the system has drifted, so a script or CI job can act on it
+battlestation diff --exit-code
+
 # Detailed help for any command
 battlestation apply --help
 
@@ -66,6 +69,23 @@ auto-hide-delay = 0.0
 ```
 
 Edit the file by hand, keep it in version control—**a private repo**: the capture includes personal details like your text replacements, installed apps, and default app choices—and `apply` it on a fresh machine. `apply` only touches settings that actually differ, restarts the affected processes once, and tells you when a change needs a re-login to take full effect.
+
+## Catching drift
+
+macOS updates and apps quietly reset preferences. `battlestation diff --exit-code` exits 1 when the live system no longer matches your file, the same way `git diff --exit-code` does, which makes drift something a script can act on:
+
+```bash
+battlestation diff --exit-code || echo "settings drifted"
+```
+
+`battlestation schedule` wires that into a launchd agent that checks periodically and posts a macOS notification when something has moved:
+
+```bash
+battlestation schedule --interval weekly --file ~/dotfiles/battlestation.toml
+battlestation schedule --uninstall
+```
+
+The agent only ever notifies — it never applies anything, because a background job that silently changed system settings would be a trap rather than a feature. It writes stderr to `~/Library/Logs/battlestation-drift-check.log`, so a broken agent is diagnosable instead of silent. Pass an absolute `--file` path: the agent runs outside your shell, with a different working directory.
 
 ## MCP server
 

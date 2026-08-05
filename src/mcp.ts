@@ -56,6 +56,11 @@ async function runCommandAsTool(
     yes: true,
     fix: false,
     json: false,
+    // Tools report drift in their JSON payload, so an MCP call never fails
+    // merely because the system differs from the file.
+    exitCode: false,
+    interval: 'weekly',
+    uninstall: false,
     arguments: [],
     ...options,
   };

@@ -59,9 +59,13 @@ export async function diffCommand(
 ): Promise<number> {
   const changes = await loadChanges(options.file, environment);
 
+  // With --exit-code, drift is reported the way `git diff --exit-code` does,
+  // so a scheduled check can act on it.
+  const driftCode = options.exitCode && changes.length > 0 ? 1 : 0;
+
   if (options.json) {
     environment.log(JSON.stringify(changes.map(changeAsJson), null, 2));
-    return 0;
+    return driftCode;
   }
 
   if (changes.length === 0) {
@@ -72,7 +76,7 @@ export async function diffCommand(
   environment.log(chalk.bold(`${changes.length} setting(s) would change:`));
   for (const change of changes) environment.log(describeChange(change));
 
-  return 0;
+  return driftCode;
 }
 
 function logJson(environment: CliEnvironment, payload: unknown): number {

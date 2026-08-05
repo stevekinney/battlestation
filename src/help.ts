@@ -16,6 +16,7 @@ ${heading('Usage:')}
   battlestation ${command('set')}     <section.key> <value>   Set a value in the TOML file
   battlestation ${command('unset')}   <section.key>           Remove a value from the TOML file
   battlestation ${command('mcp')}                             Run as a STDIO MCP server
+  battlestation ${command('schedule')} [--interval <how-often>]  Check for drift periodically and notify
 
 Apply is declarative: settings in the TOML are written, and settings absent
 from the TOML (commented out) are deleted so macOS falls back to its default.
@@ -26,6 +27,9 @@ ${heading('Options:')}
   --yes           For apply: skip the confirmation prompt (required with --json)
   --fix           For doctor: remove unknown entries and rewrite canonically
   --json          For diff, apply, list, and get: print machine-readable JSON
+  --exit-code     For diff: exit 1 when the system has drifted
+  --interval      For schedule: hourly, daily, or weekly (default: weekly)
+  --uninstall     For schedule: remove the scheduled check
   --help          Show this message
 
 Run ${command('battlestation <command> --help')} for details on any command.
@@ -56,15 +60,18 @@ ${heading('Usage:')} battlestation diff [--file <path>] [--json]
 Compares every registered setting against the file. Settings present in the
 TOML that differ from the system show as writes; settings absent from the TOML
 but set on the system show as deletions (applying would restore the macOS
-default). Exits 0 whether or not there is drift.
+default). Exits 0 whether or not there is drift, unless you pass --exit-code.
 
 ${heading('Options:')}
   --file <path>   TOML file to compare against (default: battlestation.toml)
   --json          Print changes as a JSON array (address, label, current,
                   target, restart, requiresLogout) for scripts and UIs
+  --exit-code     Exit 1 when there is drift, like \`git diff --exit-code\`,
+                  so a scheduled check or CI job can act on it
 
-${heading('Example:')}
+${heading('Examples:')}
   battlestation diff --json | jq '.[].address'
+  battlestation diff --exit-code || echo "settings drifted"
 `,
   apply: `${heading('battlestation apply')} — make the system match the TOML
 
@@ -163,6 +170,30 @@ ${heading('Options:')}
 
 ${heading('Example:')}
   battlestation unset dock.icon-size
+`,
+  schedule: `${heading('battlestation schedule')} — check for drift periodically
+
+${heading('Usage:')} battlestation schedule [--interval <how-often>] [--file <path>] [--uninstall]
+
+Installs a launchd agent that runs \`battlestation diff --exit-code\` on a
+schedule and posts a macOS notification when your settings have drifted from
+the file. It only ever notifies — it never applies anything, because a
+background job that silently changed system settings would be a trap.
+
+The agent is written to ~/Library/LaunchAgents and loaded with launchctl;
+stderr goes to ~/Library/Logs/battlestation-drift-check.log so a failing
+agent is diagnosable rather than silent. Re-running replaces the existing
+agent, so changing the interval or file is just running it again.
+
+${heading('Options:')}
+  --interval      hourly, daily, or weekly (default: weekly)
+  --file <path>   TOML file to check against (default: battlestation.toml).
+                  Use an absolute path — the agent runs outside your shell.
+  --uninstall     Unload and remove the agent
+
+${heading('Examples:')}
+  battlestation schedule --interval daily --file ~/dotfiles/battlestation.toml
+  battlestation schedule --uninstall
 `,
   mcp: `${heading('battlestation mcp')} — run as a STDIO MCP server
 

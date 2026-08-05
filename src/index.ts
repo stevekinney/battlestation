@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { realpathSync } from 'node:fs';
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { dirname } from 'node:path';
 import { createInterface } from 'node:readline/promises';
 import { pathToFileURL } from 'node:url';
@@ -19,6 +19,7 @@ import {
   unsetCommand,
 } from './file-commands.js';
 import { mcpCommand } from './mcp.js';
+import { scheduleCommand } from './schedule.js';
 
 export { applyChanges, diffSettings } from './apply.js';
 export type { ApplyResult, PendingChange } from './apply.js';
@@ -56,6 +57,7 @@ export const commands: Record<
   set: setCommand,
   unset: unsetCommand,
   mcp: mcpCommand,
+  schedule: scheduleCommand,
 };
 
 /** Run the CLI with the given arguments. Returns the process exit code. */
@@ -68,6 +70,9 @@ export async function run(argv: string[], environment: CliEnvironment): Promise<
       yes: { type: 'boolean', default: false },
       fix: { type: 'boolean', default: false },
       json: { type: 'boolean', default: false },
+      'exit-code': { type: 'boolean', default: false },
+      interval: { type: 'string', default: 'weekly' },
+      uninstall: { type: 'boolean', default: false },
       help: { type: 'boolean', default: false },
     },
     allowPositionals: true,
@@ -93,6 +98,9 @@ export async function run(argv: string[], environment: CliEnvironment): Promise<
       yes: values.yes,
       fix: values.fix,
       json: values.json,
+      exitCode: values['exit-code'],
+      interval: values.interval,
+      uninstall: values.uninstall,
       arguments: positionals.slice(1),
     },
     environment,
@@ -127,6 +135,7 @@ export function defaultEnvironment(): CliEnvironment {
       await mkdir(dirname(path), { recursive: true });
       await writeFile(path, contents, 'utf8');
     },
+    removeTextFile: (path) => rm(path, { force: true }),
     log: (message) => process.stdout.write(`${message}\n`),
     confirm: askConfirmation,
     now: () => new Date(),

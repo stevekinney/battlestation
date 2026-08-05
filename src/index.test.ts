@@ -195,6 +195,50 @@ describe('per-command help', () => {
   });
 });
 
+describe('diff --exit-code', () => {
+  it('exits 1 when the system has drifted', async () => {
+    const files = new Map([['settings.toml', '[dock]\nauto-hide = false\n']]);
+    const { environment, logs } = makeEnvironment(files);
+
+    expect(await run(['diff', '--exit-code', '--file', 'settings.toml'], environment)).toBe(1);
+    expect(logs[0]).toContain('setting(s) would change');
+  });
+
+  it('exits 0 when the system matches', async () => {
+    const files = new Map([['settings.toml', '[dock]\nauto-hide = true\n']]);
+    const { environment } = makeEnvironment(files);
+
+    expect(await run(['diff', '--exit-code', '--file', 'settings.toml'], environment)).toBe(0);
+  });
+
+  it('still exits 0 on drift without the flag', async () => {
+    const files = new Map([['settings.toml', '[dock]\nauto-hide = false\n']]);
+    const { environment } = makeEnvironment(files);
+
+    expect(await run(['diff', '--file', 'settings.toml'], environment)).toBe(0);
+  });
+
+  it('applies to --json output too', async () => {
+    const files = new Map([['settings.toml', '[dock]\nauto-hide = false\n']]);
+    const { environment, logs } = makeEnvironment(files);
+
+    expect(
+      await run(['diff', '--json', '--exit-code', '--file', 'settings.toml'], environment),
+    ).toBe(1);
+    expect(JSON.parse(logs[0]!)).toHaveLength(1);
+  });
+});
+
+describe('schedule command', () => {
+  it('is reachable from the CLI and honors --interval', async () => {
+    const files = new Map<string, string>();
+    const { environment, logs } = makeEnvironment(files);
+
+    expect(await run(['schedule', '--interval', 'hourly'], environment)).toBe(0);
+    expect(logs[0]).toBe('Scheduled a hourly drift check.');
+  });
+});
+
 describe('mcp command', () => {
   it('starts the stdio server and shuts down cleanly', async () => {
     const { environment } = makeEnvironment(new Map());
@@ -302,6 +346,11 @@ describe('defaultEnvironment', () => {
 
     const echoed = await environment.run('/bin/echo', ['ok']);
     expect(echoed.stdout.trim()).toBe('ok');
+
+    await environment.removeTextFile(path);
+    expect(await readFile(path, 'utf8').catch(() => 'gone')).toBe('gone');
+    // Removing a file that is already gone must not throw.
+    await environment.removeTextFile(path);
 
     expect(environment.now()).toBeInstanceOf(Date);
     expect(() => environment.log('')).not.toThrow();

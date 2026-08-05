@@ -11,6 +11,7 @@ chalk.level = 0;
 export const fakeRun: CommandRunner = async (command, args) => {
   if (command === 'sw_vers') return { stdout: '26.5.2\n', exitCode: 0 };
   if (command === 'killall') return { stdout: '', exitCode: 0 };
+  if (command === 'launchctl') return { stdout: '', exitCode: 0 };
   if (args[0] === 'write' || args[0] === 'delete') return { stdout: '', exitCode: 0 };
   if (args[1] === 'com.apple.dock' && args[2] === 'autohide') {
     return { stdout: '1\n', exitCode: 0 };
@@ -39,6 +40,9 @@ export function makeEnvironment(
     },
     writeTextFile: async (path, contents) => {
       files.set(path, contents);
+    },
+    removeTextFile: async (path) => {
+      files.delete(path);
     },
     log: (message) => logs.push(message),
     confirm: async (question) => {
