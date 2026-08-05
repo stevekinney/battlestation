@@ -50,6 +50,7 @@ export function makeEnvironment(
       return confirmAnswer;
     },
     now: () => new Date('2026-08-04T00:00:00Z'),
+    configuration: { file: 'battlestation.toml', interval: 'weekly' },
   };
 
   return { environment, logs, confirmations, commands };

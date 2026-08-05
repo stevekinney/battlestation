@@ -70,6 +70,27 @@ auto-hide-delay = 0.0
 
 Edit the file by hand, keep it in version control—**a private repo**: the capture includes personal details like your text replacements, installed apps, and default app choices—and `apply` it on a fresh machine. `apply` only touches settings that actually differ, restarts the affected processes once, and tells you when a change needs a re-login to take full effect.
 
+## Configuration
+
+The manifest lives at `~/.battlestation.toml` by default, so you can run `battlestation diff` from anywhere without remembering a path. Configuration resolves through [`@lostgradient/environmentalist`](https://github.com/stevekinney/environmentalist), most-explicit-wins:
+
+| Priority | Source                                                       |
+| -------- | ------------------------------------------------------------ |
+| 1        | `--file` / `--interval` flags                                |
+| 2        | `BATTLESTATION_CONFIGURATION` / `BATTLESTATION_INTERVAL`     |
+| 3        | `.env` files                                                 |
+| 4        | `battlestation.config.{ts,js,json,toml,yaml}` in the project |
+| 5        | `~/.battlestation`, `~/.config/battlestation/config.*`       |
+| 6        | Defaults: `~/.battlestation.toml`, `weekly`                  |
+
+```bash
+export BATTLESTATION_CONFIGURATION=~/dotfiles/mac.toml
+battlestation diff                     # uses the exported path
+battlestation diff --file ./other.toml # a flag still wins
+```
+
+Paths beginning with `~` are expanded, and relative paths resolve against the working directory. Only settings that describe _how battlestation runs_ are configurable this way — per-invocation switches like `--json`, `--yes`, and `--dry-run` are deliberately not, since a persisted `yes = true` would be a footgun rather than a convenience.
+
 ## Catching drift
 
 macOS updates and apps quietly reset preferences. `battlestation diff --exit-code` exits 1 when the live system no longer matches your file, the same way `git diff --exit-code` does, which makes drift something a script can act on:

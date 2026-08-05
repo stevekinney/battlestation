@@ -22,7 +22,7 @@ Apply is declarative: settings in the TOML are written, and settings absent
 from the TOML (commented out) are deleted so macOS falls back to its default.
 
 ${heading('Options:')}
-  --file <path>   TOML file to read or write (default: battlestation.toml)
+  --file <path>   TOML file to read or write (default: ~/.battlestation.toml)
   --dry-run       For apply: show what would change without changing anything
   --yes           For apply: skip the confirmation prompt (required with --json)
   --fix           For doctor: remove unknown entries and rewrite canonically
@@ -31,6 +31,13 @@ ${heading('Options:')}
   --interval      For schedule: hourly, daily, or weekly (default: weekly)
   --uninstall     For schedule: remove the scheduled check
   --help          Show this message
+
+${heading('Configuration:')}
+  The manifest path and schedule interval resolve from, highest priority first:
+  a command-line flag, then BATTLESTATION_CONFIGURATION / BATTLESTATION_INTERVAL,
+  then a .env file, then a battlestation.config.* in the project, then
+  ~/.battlestation or ~/.config/battlestation/, and finally the defaults
+  (~/.battlestation.toml, weekly).
 
 Run ${command('battlestation <command> --help')} for details on any command.
 `;
@@ -47,7 +54,7 @@ and, where known, its legal values; settings not set on this machine appear as
 commented-out keys so the file documents everything it can manage.
 
 ${heading('Options:')}
-  --file <path>   Where to write the TOML (default: battlestation.toml).
+  --file <path>   Where to write the TOML (default: ~/.battlestation.toml).
                   Parent directories are created as needed.
 
 ${heading('Example:')}
@@ -63,7 +70,7 @@ but set on the system show as deletions (applying would restore the macOS
 default). Exits 0 whether or not there is drift, unless you pass --exit-code.
 
 ${heading('Options:')}
-  --file <path>   TOML file to compare against (default: battlestation.toml)
+  --file <path>   TOML file to compare against (default: ~/.battlestation.toml)
   --json          Print changes as a JSON array (address, label, current,
                   target, restart, requiresLogout) for scripts and UIs
   --exit-code     Exit 1 when there is drift, like \`git diff --exit-code\`,
@@ -85,7 +92,7 @@ full snapshot of the pre-apply state is saved next to the file
 Affected processes (Dock, Finder, SystemUIServer) restart once at the end.
 
 ${heading('Options:')}
-  --file <path>   TOML file to apply (default: battlestation.toml)
+  --file <path>   TOML file to apply (default: ~/.battlestation.toml)
   --dry-run       Show the change list and stop; nothing is written
   --yes           Skip the confirmation prompt
   --json          Print the outcome as JSON; non-interactive, so requires
@@ -105,7 +112,7 @@ syntax, unknown sections or keys, wrong value types) exit 1; advisory
 macOS often accepts values System Settings does not offer.
 
 ${heading('Options:')}
-  --file <path>   TOML file to check (default: battlestation.toml)
+  --file <path>   TOML file to check (default: ~/.battlestation.toml)
   --fix           Remove unknown entries and rewrite the file canonically.
                   Refuses while [manual] errors (syntax, wrong types) remain.
 
@@ -120,7 +127,7 @@ Shows each registered setting with its value in the TOML file and on the live
 system. A missing file simply shows every file value as unset.
 
 ${heading('Options:')}
-  --file <path>   TOML file to read (default: battlestation.toml)
+  --file <path>   TOML file to read (default: ~/.battlestation.toml)
   --json          Full machine-readable reports: address, label, type,
                   description, file/system values, choices, range, risk,
                   restart, and logout requirements
@@ -135,7 +142,7 @@ ${heading('Usage:')} battlestation get <section.key> [--file <path>] [--json]
 Shows a single setting's description, file value, and live system value.
 
 ${heading('Options:')}
-  --file <path>   TOML file to read (default: battlestation.toml)
+  --file <path>   TOML file to read (default: ~/.battlestation.toml)
   --json          Machine-readable report including choices/range metadata
 
 ${heading('Example:')}
@@ -151,7 +158,7 @@ is not touched — run \`battlestation apply\` afterwards. Booleans take
 true/false; structured (plist) settings take a JSON literal.
 
 ${heading('Options:')}
-  --file <path>   TOML file to edit (default: battlestation.toml)
+  --file <path>   TOML file to edit (default: ~/.battlestation.toml)
 
 ${heading('Examples:')}
   battlestation set dock.icon-size 48
@@ -166,7 +173,7 @@ is declarative, the next \`battlestation apply\` deletes the key from the
 system, restoring the macOS default.
 
 ${heading('Options:')}
-  --file <path>   TOML file to edit (default: battlestation.toml)
+  --file <path>   TOML file to edit (default: ~/.battlestation.toml)
 
 ${heading('Example:')}
   battlestation unset dock.icon-size
@@ -186,8 +193,9 @@ agent is diagnosable rather than silent. Re-running replaces the existing
 agent, so changing the interval or file is just running it again.
 
 ${heading('Options:')}
-  --interval      hourly, daily, or weekly (default: weekly)
-  --file <path>   TOML file to check against (default: battlestation.toml).
+  --interval      hourly, daily, or weekly (default: weekly, or
+                  BATTLESTATION_INTERVAL)
+  --file <path>   TOML file to check against (default: ~/.battlestation.toml).
                   Use an absolute path — the agent runs outside your shell.
   --uninstall     Unload and remove the agent
 

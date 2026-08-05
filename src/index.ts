@@ -10,6 +10,7 @@ import chalk from 'chalk';
 
 import { applyCommand, captureCommand, commandHelp, diffCommand, help } from './commands.js';
 import type { CliEnvironment, CommandOptions } from './commands.js';
+import { resolveConfiguration } from './configuration.js';
 import { runCommand } from './defaults.js';
 import {
   doctorCommand,
@@ -41,6 +42,14 @@ export type {
 } from './settings/definition.js';
 export { findDefinition, registry } from './settings/registry.js';
 export { analyzeToml, parseToml, renderToml, settingLegend } from './toml.js';
+export {
+  configurationSchema,
+  createConfigurationSchema,
+  defaultManifestPath,
+  expandPath,
+  resolveConfiguration,
+} from './configuration.js';
+export type { ResolvedConfiguration } from './configuration.js';
 export type { CapturedSetting, DesiredSetting, TomlAnalysis, TomlIssue } from './toml.js';
 
 /** Every CLI command, keyed by name. */
@@ -65,13 +74,15 @@ export async function run(argv: string[], environment: CliEnvironment): Promise<
   const { values, positionals } = parseArgs({
     args: argv,
     options: {
-      file: { type: 'string', default: 'battlestation.toml' },
+      // No defaults here: an absent flag must fall through to the
+      // configuration resolved from the environment, not shadow it.
+      file: { type: 'string' },
       'dry-run': { type: 'boolean', default: false },
       yes: { type: 'boolean', default: false },
       fix: { type: 'boolean', default: false },
       json: { type: 'boolean', default: false },
       'exit-code': { type: 'boolean', default: false },
-      interval: { type: 'string', default: 'weekly' },
+      interval: { type: 'string' },
       uninstall: { type: 'boolean', default: false },
       help: { type: 'boolean', default: false },
     },
@@ -93,13 +104,13 @@ export async function run(argv: string[], environment: CliEnvironment): Promise<
 
   return command(
     {
-      file: values.file,
+      file: values.file ?? environment.configuration.file,
       dryRun: values['dry-run'],
       yes: values.yes,
       fix: values.fix,
       json: values.json,
       exitCode: values['exit-code'],
-      interval: values.interval,
+      interval: values.interval ?? environment.configuration.interval,
       uninstall: values.uninstall,
       arguments: positionals.slice(1),
     },
@@ -127,8 +138,9 @@ export async function askConfirmation(
 }
 
 /** The real environment used when the CLI runs as a process. */
-export function defaultEnvironment(): CliEnvironment {
+export async function defaultEnvironment(): Promise<CliEnvironment> {
   return {
+    configuration: await resolveConfiguration(),
     run: runCommand,
     readTextFile: (path) => readFile(path, 'utf8'),
     writeTextFile: async (path, contents) => {
@@ -162,5 +174,5 @@ export function isMainModule(moduleUrl: string, argv1: string | undefined): bool
 }
 
 if (isMainModule(import.meta.url, process.argv[1])) {
-  process.exitCode = await run(process.argv.slice(2), defaultEnvironment());
+  process.exitCode = await run(process.argv.slice(2), await defaultEnvironment());
 }

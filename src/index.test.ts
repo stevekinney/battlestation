@@ -336,7 +336,7 @@ describe('isMainModule', () => {
 
 describe('defaultEnvironment', () => {
   it('wires real file access, command running, output, and time', async () => {
-    const environment = defaultEnvironment();
+    const environment = await defaultEnvironment();
     const directory = await mkdtemp(join(tmpdir(), 'battlestation-'));
     const path = join(directory, 'nested', 'sample.txt');
 

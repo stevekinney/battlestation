@@ -1,6 +1,7 @@
 import { capitalCase } from 'change-case';
 import chalk from 'chalk';
 
+import type { ResolvedConfiguration } from './configuration.js';
 import type { CommandRunner } from './defaults.js';
 import type { SettingDefinition, SettingValue } from './settings/definition.js';
 import { formatTomlValue } from './toml.js';
@@ -14,6 +15,8 @@ export type CliEnvironment = {
   log: (message: string) => void;
   confirm: (question: string) => Promise<boolean>;
   now: () => Date;
+  /** Configuration resolved from every source below the command line. */
+  configuration: ResolvedConfiguration;
 };
 
 /** The options every command receives after argument parsing. */

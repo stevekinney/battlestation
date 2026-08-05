@@ -1,6 +1,6 @@
 {
   "name": "battlestation",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Capture macOS system preferences to an auditable TOML file and restore them on a new machine.",
   "homepage": "https://github.com/stevekinney/battlestation#readme",
   "bugs": "https://github.com/stevekinney/battlestation/issues",
@@ -57,6 +57,7 @@
     "verify:release-version": "bun run scripts/verify-release-version.ts"
   },
   "dependencies": {
+    "@lostgradient/environmentalist": "^0.0.2",
     "@modelcontextprotocol/sdk": "^1.30.0",
     "chalk": "^6.0.0",
     "change-case": "^5.4.4",
